@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "361809157393",
+    "project_id": "bab-e-ilm",
+    "storage_bucket": "bab-e-ilm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:361809157393:android:e1fb6cc7c010aa1d6100b0",
+        "android_client_info": {
+          "package_name": "com.burhansherkatha.babeilm.bab_e_ilm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "361809157393-ssmdcn4meqh0ksb7s2m27e5frh9pc6il.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtax0q1hgk3lq_v7mdIoBeeigAxO4IwO8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "361809157393-ssmdcn4meqh0ksb7s2m27e5frh9pc6il.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

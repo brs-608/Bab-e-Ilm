@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>361809157393-2l9vidcuk3vin3fh3hctfu5cio8nqq9g.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.361809157393-2l9vidcuk3vin3fh3hctfu5cio8nqq9g</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCr4qaWFgdeyG8QqwIR220z2aFdbXxQ428</string>
+	<key>GCM_SENDER_ID</key>
+	<string>361809157393</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.burhansherkatha.babeilm.babEIlm</string>
+	<key>PROJECT_ID</key>
+	<string>bab-e-ilm</string>
+	<key>STORAGE_BUCKET</key>
+	<string>bab-e-ilm.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:361809157393:ios:7631fadd9bf03f4b6100b0</string>
+</dict>
+</plist>
