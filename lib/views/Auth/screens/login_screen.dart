@@ -189,7 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               storeEmail();
                               storeUserInfo();
                               await _auth.signInWithEmailAndPassword(email: emailController.text.toString(), password: passwordController.text.toString()).then((value) {
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> HomePage(email: emailController.text.toString(),)));
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> HomePage()));
                               }).onError((error, stackTrace) {
                                 setState(() {
                                   loading = false;

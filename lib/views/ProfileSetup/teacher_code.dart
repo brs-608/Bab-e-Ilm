@@ -177,7 +177,7 @@ class _TeacherCodeState extends State<TeacherCode> {
                                 await UserInfoFireStore().storingRole(RegisterEmail.email!, "teacher");
                                 await addUserToGroup();
                                 storeUserInfo();
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage(email: RegisterEmail.email!)));
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage()));
                               }else{
                                 setState(() {
                                   loading = false;

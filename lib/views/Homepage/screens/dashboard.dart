@@ -5,9 +5,6 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../Auth/firebase_services/storingName.dart';
 class Dashboard extends StatefulWidget {
-  String email;
-  Dashboard({required this.email});
-
   @override
   State<Dashboard> createState() => _DashboardState();
 }
@@ -19,7 +16,6 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    String _email = widget.email;
     var info = GetInfo.info;
     return SingleChildScrollView(
       child: Column(

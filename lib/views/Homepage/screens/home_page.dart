@@ -16,8 +16,6 @@ import 'lectures.dart';
 
 
 class HomePage extends StatefulWidget {
-  String email;
-  HomePage({required this.email});
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -32,6 +30,7 @@ class _HomePageState extends State<HomePage> {
 
   PageController pageController = PageController(initialPage: 0,);
   final auth = FirebaseAuth.instance;
+  final email = FirebaseAuth.instance.currentUser!.email;
   var info = GetInfo.info;
   final firestoreInst = FirebaseFirestore.instance;
 
@@ -45,7 +44,7 @@ class _HomePageState extends State<HomePage> {
         });
       },
       children: [
-        Dashboard(email: widget.email,), // here I want email
+        Dashboard(), // here I want email
         Classes(),
         Lectures(),
         Profile()
@@ -53,7 +52,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
   void retrieveProfilePicUrl() async {
-    final userDocRef = firestoreInst.collection('users').doc(widget.email);
+    final userDocRef = firestoreInst.collection('users').doc(email);
     final userDoc = await userDocRef.get();
     if (userDoc.exists) {
       setState(() {

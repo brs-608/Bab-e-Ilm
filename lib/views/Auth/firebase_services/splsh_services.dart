@@ -14,7 +14,7 @@ class SplashServices{
         final userEmail = user.email.toString();
 
           GetInfo.info = await UserInfoFireStore().getUserInfo(userEmail);
-        Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>HomePage(email: userEmail,)));
+        Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>HomePage()));
       });
     }else{
       Timer(Duration(seconds: 3),(){
