@@ -1,14 +1,18 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:bab_e_ilm/Utils/utilites.dart';
+import 'package:bab_e_ilm/provider/emailProvider.dart';
+import 'package:bab_e_ilm/views/Auth/firebase_services/storingName.dart';
 import 'package:bab_e_ilm/views/Homepage/screens/profile.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import '../../Auth/screens/login_screen.dart';
 import '../../ClassLecturesNotes/creatingGroup.dart';
+import '../email_access.dart';
 import 'classes.dart';
 import 'dashboard.dart';
 import 'lectures.dart';
@@ -16,6 +20,8 @@ import 'lectures.dart';
 
 
 class HomePage extends StatefulWidget {
+  String email;
+  HomePage({required this.email});
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -30,45 +36,53 @@ class _HomePageState extends State<HomePage> {
 
   PageController pageController = PageController(initialPage: 0,);
   final auth = FirebaseAuth.instance;
-  final email = FirebaseAuth.instance.currentUser!.email;
-  var info = GetInfo.info;
-  final firestoreInst = FirebaseFirestore.instance;
 
+  final firestoreInst = FirebaseFirestore.instance;
+  var info = GetInfo.info;
   String? profilePicUrl;
-  Widget pageView(){
-    return PageView(
-      controller: pageController,
-      onPageChanged: (index){
-        setState(() {
-          curIndex = index;
-        });
-      },
-      children: [
-        Dashboard(), // here I want email
-        Classes(),
-        Lectures(),
-        Profile()
-      ],
-    );
-  }
+
   void retrieveProfilePicUrl() async {
-    final userDocRef = firestoreInst.collection('users').doc(email);
+    final userDocRef = firestoreInst.collection('users').doc(widget.email);
     final userDoc = await userDocRef.get();
     if (userDoc.exists) {
       setState(() {
         profilePicUrl = userDoc['profilePic'];
       });
+    }else{
+      setState(() {
+        profilePicUrl = "";
+      });
+
     }
   }
+  Widget pageView() {
+      return PageView(
+        controller: pageController,
+        onPageChanged: (index) {
+          setState(() {
+            curIndex = index;
+          });
+        },
+        children: [
+          Dashboard(email: widget.email,), // here I want email
+          Classes(),
+          Lectures(),
+          Profile()
+        ],
+      );
+  }
+
 
   @override
   void initState(){
     // TODO: implement initState
-    retrieveProfilePicUrl();
+    super.initState();
+    // retrieveProfilePicUrl();
 
   }
   @override
   Widget build(BuildContext context) {
+    // final provider = Provider.of<EmailProvider>(context);
     return Scaffold(
       key: _homePage,
       appBar: AppBar(
@@ -80,7 +94,7 @@ class _HomePageState extends State<HomePage> {
           Padding(padding: EdgeInsets.only(right: 10),child: IconButton(onPressed:(){},icon:Icon(Icons.notifications_active,color: Colors.deepPurple,)))
         ],
       ),
-      floatingActionButton: info!["UserRole"] == "admin" && curIndex == 1?FloatingActionButton(
+      floatingActionButton: info?["UserRole"] == "admin" && curIndex == 1?FloatingActionButton(
         backgroundColor: Colors.deepPurple,
           onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateGroup()));
@@ -98,7 +112,7 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       children: [
                         CircularProfileAvatar(
-                          profilePicUrl==null?"":profilePicUrl!,
+                          "",
                           radius: 45,
                           elevation: 11,
                           backgroundColor: Colors.blue,
@@ -126,8 +140,8 @@ class _HomePageState extends State<HomePage> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("${info!["fullName"]}",style: GoogleFonts.nunito(fontSize: 16,color: Colors.black,fontWeight: FontWeight.w900),),
-                            Text("${info!["email"]}",style: TextStyle(color: Colors.blue,fontSize: 10),)
+                            Text("${info?["fullName"]}",style: GoogleFonts.nunito(fontSize: 16,color: Colors.black,fontWeight: FontWeight.w900),),
+                            Text("${info?["email"]}",style: TextStyle(color: Colors.blue,fontSize: 10),)
                           ],
                         )
                       ],

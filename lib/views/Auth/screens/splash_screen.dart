@@ -9,7 +9,9 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  SplashServices splashServices = SplashServices() ;// this is giving error
+  SplashServices splashServices = SplashServices();
+
+
   @override
   void initState() {
     // TODO: implement initState
@@ -18,6 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
   @override
   Widget build(BuildContext context) {
+
     return  Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,

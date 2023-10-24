@@ -256,7 +256,7 @@ class _ClassSetupState extends State<ClassSetup> {
                                 await UserInfoFireStore().storingGrade(_email, grade!);
                                 await burhan(grade!);
                                 storeUserInfo();
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage()));
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage(email: RegisterEmail.email!,)));
                               }
                             },
                             child: Padding(
@@ -427,7 +427,7 @@ class _OALavelsState extends State<OALavels> {
                               }else{
                                 await UserInfoFireStore().storingGrade(_email, grade!);
                                 storeUserInfo();
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage()));
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage(email: RegisterEmail.email!,)));
                               }
                             },
                             child: Padding(

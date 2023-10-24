@@ -1,3 +1,4 @@
+import 'package:bab_e_ilm/provider/emailProvider.dart';
 import 'package:bab_e_ilm/provider/selectedSubject.dart';
 import 'package:bab_e_ilm/provider/videoPlayer.dart';
 import 'package:bab_e_ilm/views/Auth/screens/login_screen.dart';
@@ -34,7 +35,7 @@ class BabEIlm extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => VideoPlayerState()),
-        ChangeNotifierProvider(create: (_) => SelectedSubjectProvider())
+        ChangeNotifierProvider(create: (_) => SelectedSubjectProvider()),
       ],
       child: ResponsiveSizer(
         builder: (context,orientation,screenType){

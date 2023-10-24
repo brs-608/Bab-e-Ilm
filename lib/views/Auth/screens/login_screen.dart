@@ -4,9 +4,7 @@ import 'package:bab_e_ilm/views/Homepage/screens/home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import '../../../Utils/utilites.dart';
-
 class StoredEmail{
   static String? email;
 }
@@ -15,11 +13,9 @@ class GetInfo{
 }
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
-
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
-
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -35,7 +31,6 @@ class _LoginScreenState extends State<LoginScreen> {
     emailController.dispose();
     passwordController.dispose();
   }
-
   void storeEmail(){
     StoredEmail.email = emailController.text.toString();
   }
@@ -96,26 +91,26 @@ class _LoginScreenState extends State<LoginScreen> {
                                   padding: EdgeInsets.symmetric(horizontal: 20),
                                   child: TextFormField(
                                     controller: emailController,
-                                      style: TextStyle(color: Colors.deepPurple),
-                                      decoration: InputDecoration(
-                                        hintText: "Enter your email",
-                                        label: Text("Email",style: TextStyle(color: Colors.deepPurple),),
-                                        prefixIcon: Icon(Icons.email_rounded,color: Colors.deepPurple,),
-                                        filled: true,
-                                        focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(10),
-                                            borderSide: BorderSide(
-                                                color: Colors.deepPurple
-                                            )
-                                        ),
-                                        border:  OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(10),
-                                            borderSide: BorderSide(
-                                                color: Colors.black
-                                            )
-                                        ),
-                                        fillColor: Colors.grey.withOpacity(0.1),
+                                    style: TextStyle(color: Colors.deepPurple),
+                                    decoration: InputDecoration(
+                                      hintText: "Enter your email",
+                                      label: Text("Email",style: TextStyle(color: Colors.deepPurple),),
+                                      prefixIcon: Icon(Icons.email_rounded,color: Colors.deepPurple,),
+                                      filled: true,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(10),
+                                          borderSide: BorderSide(
+                                              color: Colors.deepPurple
+                                          )
                                       ),
+                                      border:  OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(10),
+                                          borderSide: BorderSide(
+                                              color: Colors.black
+                                          )
+                                      ),
+                                      fillColor: Colors.grey.withOpacity(0.1),
+                                    ),
                                     validator: (value){
                                       if(value!.isEmpty){
                                         return "Enter your email";
@@ -130,32 +125,32 @@ class _LoginScreenState extends State<LoginScreen> {
                                   padding: EdgeInsets.symmetric(horizontal: 20),
                                   child: TextFormField(
                                     controller: passwordController,
-                                      obscureText: obscure,
-                                      style: TextStyle(color: Colors.deepPurple),
-                                      decoration: InputDecoration(
-                                        suffixIcon: InkWell(onTap:(){
-                                          setState(() {
-                                            obscure = !obscure;
-                                          });
-                                        },child: obscure?Icon(Icons.visibility_off,color: Colors.deepPurple,):Icon(Icons.visibility,color: Colors.deepPurple,)),
-                                        hintText: "Enter your password",
-                                        label: Text("Password",style: TextStyle(color: Colors.deepPurple),),
-                                        prefixIcon: Icon(Icons.lock,color: Colors.deepPurple,),
-                                        filled: true,
-                                        focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(10),
-                                            borderSide: BorderSide(
-                                                color: Colors.deepPurple
-                                            )
-                                        ),
-                                        border:  OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(10),
-                                            borderSide: BorderSide(
-                                                color: Colors.black
-                                            )
-                                        ),
-                                        fillColor: Colors.grey.withOpacity(0.1),
+                                    obscureText: obscure,
+                                    style: TextStyle(color: Colors.deepPurple),
+                                    decoration: InputDecoration(
+                                      suffixIcon: InkWell(onTap:(){
+                                        setState(() {
+                                          obscure = !obscure;
+                                        });
+                                      },child: obscure?Icon(Icons.visibility_off,color: Colors.deepPurple,):Icon(Icons.visibility,color: Colors.deepPurple,)),
+                                      hintText: "Enter your password",
+                                      label: Text("Password",style: TextStyle(color: Colors.deepPurple),),
+                                      prefixIcon: Icon(Icons.lock,color: Colors.deepPurple,),
+                                      filled: true,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(10),
+                                          borderSide: BorderSide(
+                                              color: Colors.deepPurple
+                                          )
                                       ),
+                                      border:  OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(10),
+                                          borderSide: BorderSide(
+                                              color: Colors.black
+                                          )
+                                      ),
+                                      fillColor: Colors.grey.withOpacity(0.1),
+                                    ),
                                     validator: (value){
                                       if(value!.isEmpty){
                                         return "Enter your password";
@@ -189,7 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               storeEmail();
                               storeUserInfo();
                               await _auth.signInWithEmailAndPassword(email: emailController.text.toString(), password: passwordController.text.toString()).then((value) {
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> HomePage()));
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> HomePage(email: emailController.text.toString(),)));
                               }).onError((error, stackTrace) {
                                 setState(() {
                                   loading = false;
@@ -199,7 +194,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 }else{
                                   Utils().toastMessage("Wrong Password!");
                                 }
-
                               });
                             }
                           }, child: Padding(
@@ -226,4 +220,3 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-
