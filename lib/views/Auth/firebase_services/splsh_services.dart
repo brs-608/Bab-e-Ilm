@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'package:bab_e_ilm/provider/emailProvider.dart';
 import 'package:bab_e_ilm/views/Auth/firebase_services/storingName.dart';
 import 'package:bab_e_ilm/views/Auth/screens/login_screen.dart';
-import 'package:bab_e_ilm/views/Homepage/email_access.dart';
 import 'package:bab_e_ilm/views/Homepage/screens/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';

@@ -1,4 +1,3 @@
-import 'package:bab_e_ilm/provider/emailProvider.dart';
 import 'package:bab_e_ilm/provider/selectedSubject.dart';
 import 'package:bab_e_ilm/provider/videoPlayer.dart';
 import 'package:bab_e_ilm/views/Auth/screens/login_screen.dart';

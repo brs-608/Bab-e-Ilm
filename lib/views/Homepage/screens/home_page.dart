@@ -1,6 +1,5 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:bab_e_ilm/Utils/utilites.dart';
-import 'package:bab_e_ilm/provider/emailProvider.dart';
 import 'package:bab_e_ilm/views/Auth/firebase_services/storingName.dart';
 import 'package:bab_e_ilm/views/Homepage/screens/profile.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
@@ -12,7 +11,6 @@ import 'package:provider/provider.dart';
 
 import '../../Auth/screens/login_screen.dart';
 import '../../ClassLecturesNotes/creatingGroup.dart';
-import '../email_access.dart';
 import 'classes.dart';
 import 'dashboard.dart';
 import 'lectures.dart';
