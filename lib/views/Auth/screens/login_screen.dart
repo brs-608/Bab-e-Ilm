@@ -198,7 +198,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             }
                           }, child: Padding(
                           padding: EdgeInsets.all(10),
-                          child: Text("Login",style: TextStyle(fontSize: 16),))
+                          child: Text("Login",style: TextStyle(fontSize: 16,color: Colors.white),))
                       ),
                       SizedBox(height: 20,),
                       Row(

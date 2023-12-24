@@ -281,7 +281,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       if (value!.isEmpty) {
                                         return "Enter your password";
                                       } else if(hasEnoughCharacters == false || containsSymbols == false  || containsNumbers == false || containsCapitalLetter ==  false || containsSmallLetter == false){
-                                        return "Your password should be:\n --> Contain at least 8 characters\n --> Contain at least one capital latter\n --> Contain at least one capital latter\n --> Contain at least one symbol\n --> Contain at least 1 number";
+                                        return "Your password should :\n --> Contain at least 8 characters\n --> Contain at least one capital latter\n --> Contain at least one small latter\n --> Contain at least one symbol\n --> Contain at least 1 number";
                                       }else{
                                         return null;
                                       }
@@ -344,7 +344,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               padding: EdgeInsets.all(10),
                               child: Text(
                                 "Next",
-                                style: TextStyle(fontSize: 16),
+                                style: TextStyle(fontSize: 16,color: Colors.white),
                               ))),
                       SizedBox(
                         height: 20,

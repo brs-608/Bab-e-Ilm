@@ -32,29 +32,26 @@ class _DashboardState extends State<Dashboard> {
           ),
           SizedBox(height: 20,),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            height: 40,
+            margin: EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            height: 50,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.grey.withOpacity(0.1),
+              border: Border.all(
+                color: Colors.deepPurple,
+                width: 2
+              )
+            ),
             child: TextField(
               cursorColor: Colors.deepPurple,
               textAlign: TextAlign.left,
-              textAlignVertical: TextAlignVertical.bottom,
+              textAlignVertical: TextAlignVertical.top,
               decoration: InputDecoration(
                   hintText: "search",
                   suffixIcon: Icon(Icons.search,color: Colors.deepPurple,),
-                  filled: true,
-                  fillColor: Colors.grey.withOpacity(0.2),
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.deepPurple,
-                      ),
-                      borderRadius: BorderRadius.circular(30)
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.deepPurple,
-                      ),
-                      borderRadius: BorderRadius.circular(30)
-                  )
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
               ),
             ),
           ),
@@ -85,11 +82,11 @@ class _DashboardState extends State<Dashboard> {
                       ),
                       items: [
                         Image.asset(
-                          'assets/8.jpg',
+                          'assets/9.jpg',
                           fit: BoxFit.cover,
                         ),
                         Image.asset(
-                          'assets/3.jpg',
+                          'assets/10.jpg',
                           fit: BoxFit.cover,
                         ),
                         Image.asset(
@@ -101,7 +98,7 @@ class _DashboardState extends State<Dashboard> {
                     ),
                   ),
                   Padding(
-                    padding: Device.orientation == Orientation.portrait?EdgeInsets.only(top: 150):EdgeInsets.only(top: 290),
+                    padding: Device.orientation == Orientation.portrait?EdgeInsets.only(top: 150):Device.deviceType == DeviceType.web?EdgeInsets.only(top: 500):EdgeInsets.only(top: 290),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(

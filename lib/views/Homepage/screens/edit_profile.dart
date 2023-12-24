@@ -11,6 +11,7 @@ class EditProfile extends StatelessWidget {
     String? gradeInString = info?["grade"].toString();
     return Scaffold(
       appBar: AppBar(
+        leading: InkWell(onTap: (){Navigator.pop(context);},borderRadius:BorderRadius.circular(30),child: Icon(Icons.arrow_back,color: Colors.white,),),
         backgroundColor: Colors.deepPurple,
         title: Center(
           child: Row(
@@ -42,12 +43,19 @@ class EditProfile extends StatelessWidget {
                     children:[
                       SizedBox(height: 30,),
                       Container(
+
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         height: 650,
                         child: Card(
+                          color: Colors.white,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                           elevation: 11,
                           child: Container(
+                            
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10)
+                            ),
                             child: Column(
                               children: [
                                 Padding(

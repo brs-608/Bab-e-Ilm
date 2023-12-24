@@ -7,23 +7,18 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../Auth/screens/login_screen.dart';
-final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
-GlobalKey<ScaffoldMessengerState>();
 
 
 class ClassRoom extends StatefulWidget {
+
   @override
   State<ClassRoom> createState() => _ClassRoomState();
 }
-var info = GetInfo.info;
-var name = info!["fullName"];
-var email = info!["email"];
-var userName = info!["userName"];
+
 class _ClassRoomState extends State<ClassRoom> {
-
-
-
   TextEditingController msgController = TextEditingController();
+
+
   final _formKey = GlobalKey<FormState>();
 
 
@@ -31,6 +26,7 @@ class _ClassRoomState extends State<ClassRoom> {
 
   @override
   Widget build(BuildContext context) {
+
     final provider = Provider.of<SelectedSubjectProvider>(context);
     String? group = provider.subjectID;
     Future<void> sendMessage(String text, String sender) async {
@@ -241,7 +237,8 @@ class _ClassRoomState extends State<ClassRoom> {
                 Text("Class Room",style: GoogleFonts.poppins(fontWeight: FontWeight.w900, fontSize: 18,color: Colors.white),),
                 Row(
                   children: [
-                    IconButton(onPressed: (){}, icon: Icon(Icons.video_call_sharp,color: Colors.white,)),
+                    IconButton(onPressed: (){
+                    }, icon: Icon(Icons.video_call_sharp,color: Colors.white,)),
                     IconButton(onPressed: (){}, icon: Icon(Icons.more_vert,color: Colors.white,)),
                   ],
                 ),
@@ -380,3 +377,7 @@ class _ClassRoomState extends State<ClassRoom> {
     );
   }
 }
+var info = GetInfo.info;
+var name = info!["fullName"];
+var email = info!["email"];
+var userName = info!["userName"];

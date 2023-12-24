@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
           });
         },
         children: [
-          Dashboard(email: widget.email,), // here I want email
+          Dashboard(email: widget.email,),
           Classes(),
           Lectures(),
           Profile()
@@ -83,14 +83,52 @@ class _HomePageState extends State<HomePage> {
     // final provider = Provider.of<EmailProvider>(context);
     return Scaffold(
       key: _homePage,
-      appBar: AppBar(
-        leading: IconButton(onPressed:(){_homePage.currentState?.openDrawer();},icon:Icon(Icons.menu),color: Colors.deepPurple,),
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        title: Text("Bab-e-Ilm",style: TextStyle(color: Colors.deepPurple,fontWeight: FontWeight.w900),),
-        actions: [
-          Padding(padding: EdgeInsets.only(right: 10),child: IconButton(onPressed:(){},icon:Icon(Icons.notifications_active,color: Colors.deepPurple,)))
-        ],
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(70) ,
+        child: Container(
+          height: 90,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(bottomRight: Radius.circular(30)),
+            gradient: LinearGradient(
+              colors: [
+                Color(0xffa029ff),
+                Color(0xff8304e5),
+                Color(0xff4d008c),
+              ]
+            )
+          ),
+          child: Row(
+            children: [
+              SizedBox(width: 10,),
+              Container(
+                padding: EdgeInsets.only(top: 20),
+                child: InkWell(
+                  onTap: (){
+                      _homePage.currentState?.openDrawer();
+                  },
+                  child: Icon(
+                      Icons.menu,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              SizedBox(width: 20,),
+              Container(
+                padding: EdgeInsets.only(top: 20),
+                  child: Text("Bab-e-Ilm",style: GoogleFonts.poppins(fontWeight: FontWeight.w900,color: Colors.white,fontSize: 20),)),
+              Expanded(
+                child: Container(
+                  alignment: Alignment.centerRight,
+                  padding: EdgeInsets.only(top: 25,right: 20),
+                  child: Icon(
+                    Icons.notifications,
+                    color: Colors.white,
+                  ),
+                ),
+              )
+            ],
+          ),
+        )
       ),
       floatingActionButton: info?["UserRole"] == "admin" && curIndex == 1?FloatingActionButton(
         backgroundColor: Colors.deepPurple,
@@ -135,12 +173,14 @@ class _HomePageState extends State<HomePage> {
                           },
                         ),
                         SizedBox(width: 10,),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("${info?["fullName"]}",style: GoogleFonts.nunito(fontSize: 16,color: Colors.black,fontWeight: FontWeight.w900),),
-                            Text("${info?["email"]}",style: TextStyle(color: Colors.blue,fontSize: 10),)
-                          ],
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("${info?["fullName"]}",style: GoogleFonts.nunito(fontSize: 16,color: Colors.black,fontWeight: FontWeight.w900),),
+                              Text("${info?["email"]}",style: TextStyle(color: Colors.blue,fontSize: 10),maxLines: 2,)
+                            ],
+                          ),
                         )
                       ],
                     ),
@@ -179,26 +219,26 @@ class _HomePageState extends State<HomePage> {
                     ),
                     ListTile(
                       onTap: (){Navigator.pop(context);},
-                      leading: Icon(Icons.help,color: Colors.blue,size: 30,),
-                      title: Text("Help",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+                      leading: const Icon(Icons.help,color: Colors.blue,size: 30,),
+                      title: const Text("Help",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
 
                     ),
                     ListTile(
                       onTap: (){Navigator.pop(context);},
-                      leading: Icon(Icons.chat_bubble_outline,color: Colors.blue,size: 30,),
-                      title: Text("Feedback",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+                      leading: const Icon(Icons.chat_bubble_outline,color: Colors.blue,size: 30,),
+                      title: const Text("Feedback",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
 
                     ),
                     ListTile(
                       onTap: (){Navigator.pop(context);},
-                      leading: Icon(Icons.share,color: Colors.blue,size: 30,),
-                      title: Text("Tell Others",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+                      leading: const Icon(Icons.share,color: Colors.blue,size: 30,),
+                      title: const Text("Tell Others",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
 
                     ),
                     ListTile(
                       onTap: (){Navigator.pop(context);},
-                      leading: Icon(Icons.star_half_sharp,color: Colors.blue,size: 30,),
-                      title: Text("Rate The App",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+                      leading: const Icon(Icons.star_half_sharp,color: Colors.blue,size: 30,),
+                      title: const Text("Rate The App",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
 
                     ),
                   ],
@@ -215,8 +255,8 @@ class _HomePageState extends State<HomePage> {
                         Utils().toastMessage(error.toString());
                       });
                       },
-                    leading: Icon(Icons.logout,size: 24,color: Colors.deepPurple,),
-                    title: Text("Sign Out",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold
+                    leading: const Icon(Icons.logout,size: 24,color: Colors.deepPurple,),
+                    title: const Text("Sign Out",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold
                     ),),
                   )
                 ],))
@@ -225,16 +265,25 @@ class _HomePageState extends State<HomePage> {
       ),
       bottomNavigationBar:  AnimatedBottomNavigationBar(
 
-        backgroundColor: Colors.white,
-          icons: [
+
+          backgroundGradient: const LinearGradient(
+            colors: [
+              Color(0xff4d008c),
+              Color(0xff9e0fec),
+              Color(0xffb44eea),
+            ]
+          ),
+          leftCornerRadius: 30,
+          rightCornerRadius: 0,
+          icons: const [
             Icons.home,
             Icons.school,
             Icons.video_camera_back_sharp,
             Icons.person,
           ],
-        inactiveColor: Color(0xFFB2AFAF),
+        inactiveColor: Color(0xFFFFFFFF),
         activeIndex: curIndex,
-        activeColor: Colors.deepPurple,
+        activeColor: Color(0xffcececb),
         iconSize: 28,
         gapWidth: 1,
         onTap: (p0 ) {

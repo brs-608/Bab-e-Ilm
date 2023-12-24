@@ -1,8 +1,10 @@
+import 'package:bab_e_ilm/provider/likes_dislike_provider.dart';
 import 'package:bab_e_ilm/provider/selectedSubject.dart';
 import 'package:bab_e_ilm/provider/videoPlayer.dart';
 import 'package:bab_e_ilm/views/Auth/screens/login_screen.dart';
 import 'package:bab_e_ilm/views/Auth/screens/register_screen.dart';
 import 'package:bab_e_ilm/views/Auth/screens/splash_screen.dart';
+import 'package:bab_e_ilm/views/ClassLecturesNotes/class_room.dart';
 import 'package:bab_e_ilm/views/ClassLecturesNotes/class_screen.dart';
 import 'package:bab_e_ilm/views/Homepage/screens/classes.dart';
 import 'package:bab_e_ilm/views/Homepage/screens/home_page.dart';
@@ -13,7 +15,8 @@ import 'package:flutter/rendering.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
-
+import 'package:permission_handler/permission_handler.dart';
+import 'dart:async';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,10 +38,14 @@ class BabEIlm extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => VideoPlayerState()),
         ChangeNotifierProvider(create: (_) => SelectedSubjectProvider()),
+        ChangeNotifierProvider(create: (_) => LikeDislike()),
       ],
       child: ResponsiveSizer(
         builder: (context,orientation,screenType){
           return MaterialApp(
+            theme: ThemeData(
+              primaryColor: Colors.white,
+            ),
               debugShowCheckedModeBanner: false,
               home: SplashScreen(),
           );

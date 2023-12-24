@@ -15,15 +15,26 @@ class ClassScreen extends StatelessWidget {
     final provider = Provider.of<SelectedSubjectProvider>(context);
     return DefaultTabController(
         length: 3, child: Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
-        title: Text("${provider.subjectName} Class",style: GoogleFonts.poppins(fontSize: 22,fontWeight: FontWeight.w900),),
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+                backgroundColor: Colors.deepPurple,
+              title: Text("${provider.subjectName} Class",style: GoogleFonts.poppins(fontSize: 22,fontWeight: FontWeight.w900,color: Colors.white),),
+            leading: InkWell(
+              borderRadius: BorderRadius.circular(30),
+              onTap: (){
+                Navigator.pop(context);
+              },
+                child: Icon(Icons.arrow_back,color: Colors.white,)),
+
         centerTitle: true,
         bottom: TabBar(
+          unselectedLabelColor: Colors.grey,
+          indicatorColor: Colors.white,
+          labelColor: Colors.white,
           tabs: [
-            Tab(text: 'Class',icon: Icon(FontAwesomeIcons.school),),
-            Tab(text: 'Lectures',icon:Icon(FontAwesomeIcons.video)),
-            Tab(text:'Notes',icon:Icon(FontAwesomeIcons.book)),
+            Tab(text: 'Class',icon: Icon(FontAwesomeIcons.school,color: Colors.white,),),
+            Tab(text: 'Lectures',icon:Icon(FontAwesomeIcons.video,color: Colors.white,)),
+            Tab(text:'Notes',icon:Icon(FontAwesomeIcons.book,color: Colors.white,)),
           ],
         ),
       ),
