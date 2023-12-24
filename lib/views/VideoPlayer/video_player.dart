@@ -25,7 +25,6 @@ import 'dart:convert';
 class VideoPlayerScreen extends StatefulWidget {
   String link;
   VideoPlayerScreen({required this.link});
-
   @override
   State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();
 }
