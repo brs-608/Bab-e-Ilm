@@ -1,5 +1,6 @@
 
 
+import 'package:appinio_video_player/appinio_video_player.dart';
 import 'package:bab_e_ilm/provider/likes_dislike_provider.dart';
 import 'package:bab_e_ilm/provider/selectedSubject.dart';
 import 'package:bab_e_ilm/provider/videoPlayer.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:video_player/video_player.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:http/http.dart' as http;
@@ -24,15 +26,16 @@ import 'dart:convert';
 
 class VideoPlayerScreen extends StatefulWidget {
   String link;
-  VideoPlayerScreen({required this.link});
+  String thumbnailLink;
+  VideoPlayerScreen({required this.link,required this.thumbnailLink});
   @override
   State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();
 }
 
 class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
-  late VideoPlayerController videoPlayerController ;
-
+  late VideoPlayerController videoPlayerController  ;
+  late CustomVideoPlayerController chewieController = CustomVideoPlayerController(videoPlayerController: videoPlayerController,context: context );
   @override
   void initState() {
     // TODO: implement initState
@@ -40,13 +43,22 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
   }
   void _initPlayer()async{
-    videoPlayerController= VideoPlayerController.networkUrl(Uri.parse(widget.link,));
-    await videoPlayerController.initialize();
+    videoPlayerController= VideoPlayerController.networkUrl(Uri.parse(widget.link));
+    await videoPlayerController.initialize().then((value) {setState(() {
+
+    });});
+    chewieController = CustomVideoPlayerController(
+        videoPlayerController: videoPlayerController,
+      context: context
+
+    );
   }
   @override
   void dispose() {
     // TODO: implement dispose
     videoPlayerController.dispose();
+    chewieController.dispose();
+
     super.dispose();
   }
   @override
@@ -54,7 +66,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     bool comment = false;
     final provider = Provider.of<VideoPlayerState>(context);
     final groupID = Provider.of<SelectedSubjectProvider>(context);
-    final videoLink = provider.videoLink;
     final likeDislikeProvider = Provider.of<LikeDislike>(context,listen: false);
     var info = GetInfo.info;
     String groupName() {
@@ -111,30 +122,23 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     }
     return SafeArea(
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          child: Icon(
-              videoPlayerController.value.isPlaying == true? Icons.pause:Icons.play_arrow
-          ),
-          onPressed: (){
-            setState(() {
-
-            });
-            if(videoPlayerController.value.isPlaying){
-              videoPlayerController.pause();
-            }else{
-              videoPlayerController.play();
-            }
-          },
-        ),
         body: Container(
           child: SingleChildScrollView(
             child: Column(
               children: [
                Container(
-                 height: 200,
-                   width: double.infinity,
-                   child: VideoPlayer(
-                       videoPlayerController)),
+                 height: Device.screenType == ScreenType.mobile ? 203: 800,
+                 color: Colors.black,
+                 child: Stack(
+                   children: [
+                     Center(child: CircularProgressIndicator(color: Colors.white,)),
+                     CustomVideoPlayer(
+                        customVideoPlayerController: chewieController,
+                     ),
+
+                   ],
+                 ),
+               ),
 
                 comment == true? Container():Column(
                   children: [
@@ -305,8 +309,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                         borderRadius: BorderRadius.all(Radius.circular(10)),
                                         child: InkWell(
                                           onTap: (){
-                                            provider.lectureLink(video,title);
-                                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> VideoPlayerScreen(link: video.toString(),)));
+                                            provider.lectureLink(video,title,thumbnail.toString());
+                                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> VideoPlayerScreen(link: video.toString(), thumbnailLink: thumbnail.toString(),)));
                                           },
                                           borderRadius: BorderRadius.circular(10),
                                           child: Stack(

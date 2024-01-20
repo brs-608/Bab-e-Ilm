@@ -135,11 +135,11 @@ class _LecturesState extends State<Lectures> {
                                 }else{
                                   likeDislikeProvider.likeDefault();
                                 }
-                                provider.lectureLink(video,title);
+                                provider.lectureLink(video,title,thumbnail);
                                 print(video);
                                 likeDislikeProvider.setLikes(likes.length);
                                 likeDislikeProvider.setDislikes(dislikes.length);
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=> VideoPlayerScreen(link: video.toString(),)));
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=> VideoPlayerScreen(link: video.toString(), thumbnailLink: thumbnail.toString(),)));
                               },
                               borderRadius: BorderRadius.circular(10),
                               child: Stack(

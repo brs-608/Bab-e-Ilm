@@ -43,6 +43,7 @@ class BabEIlm extends StatelessWidget {
       child: ResponsiveSizer(
         builder: (context,orientation,screenType){
           return MaterialApp(
+            title: "Bab-e-Ilm",
             theme: ThemeData(
               primaryColor: Colors.white,
             ),
