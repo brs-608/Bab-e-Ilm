@@ -285,6 +285,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                           return Center(child: Text('No Lectures yet!', style: GoogleFonts.poppins(fontWeight: FontWeight.w900, fontSize: 16),));
                         }
 
+
                         final messageDocs = snapshot.data!.docs;
 
                         return Container(
