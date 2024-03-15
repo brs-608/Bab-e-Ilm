@@ -1,6 +1,9 @@
+import 'package:bab_e_ilm/Bloc/HomePages/user_info_bloc.dart';
 import 'package:bab_e_ilm/views/Auth/screens/login_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../Auth/firebase_services/storingName.dart';
@@ -18,16 +21,30 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    String _email = widget.email;
-    var info = GetInfo.info;
-    return SingleChildScrollView(
+    // String _email = widget.email;
+    Map<String,dynamic>? infoUser;
+    final info = BlocProvider.of<UserInfoBloc>(context);
+    return BlocListener<UserInfoBloc, UserInfoState>(
+        listener: (context, state) {
+          if(state is UserDataState){
+            infoUser = state.data;
+          }
+       },
+          child: SingleChildScrollView(
       child: Column(
         children: [
           SizedBox(height: 20,),
           Row(
             children: [
               SizedBox(width: 20,),
-              Text("HI, ${info != null? "${info["fullName"]}":"burhan"} 👋🏽",style: TextStyle(fontSize: 22,fontWeight: FontWeight.w900,color: Colors.deepPurple),),
+              BlocBuilder<UserInfoBloc, UserInfoState>(
+               builder: (context, state) {
+                  if(state is UserDataState){
+                    return Text("Hi,${state.data["fullName"]}",style: TextStyle(fontWeight: FontWeight.w900,fontSize: 22,color: Colors.deepPurple),);
+                  }
+                  return Text("Hi");
+              },
+          )
             ],
           ),
           SizedBox(height: 20,),
@@ -142,128 +159,114 @@ class _DashboardState extends State<Dashboard> {
           SizedBox(height: 20,),
           Container(alignment:Alignment.topLeft,padding:EdgeInsets.only(left: 20),child: Text("Notes Shortcuts ❤",style: TextStyle(fontSize: 22,fontWeight: FontWeight.w900,color: Colors.deepPurple),)),
           SizedBox(height: 20,),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Expanded(
-                  child: Container(
-                    height: 160,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Color(0xff038bbf),
-                              Color(0xff16bcfc),
-                              Color(0xff05a2ea),
-                            ]
-                        )
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text("Physics",style: TextStyle(fontWeight: FontWeight.w900,fontSize: 18,color: Colors.white),),
-                        Text("Notes",style: TextStyle(fontSize: 18,color: Colors.white),),
-                      ],
-                    ),
+                SizedBox(width: 20,),
+                Container(
+                  height: 160,
+                  width: 200,
+                  decoration: BoxDecoration(
+                    // shape: BoxShape.circle,
+                      borderRadius: BorderRadius.circular(120),
+                      gradient: LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [
+                            Color(0xff0b001c),
+                            Color(0xff4803f8),
+
+                          ]
+                      )
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text("Physics",style: TextStyle(fontWeight: FontWeight.w900,fontSize: 18,color: Colors.white),),
+                      Text("Notes",style: TextStyle(fontSize: 18,color: Colors.white),),
+                    ],
                   ),
                 ),
                 SizedBox(width: 10,),
-                Expanded(
-                  child: Container(
-                    height: 160,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Color(0xffe56d0e),
-                              Color(0xffe56d0e),
-                              Color(0xff9d4301),
-                            ]
-                        )
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text("Chemistry",style: TextStyle(fontWeight: FontWeight.w900,fontSize: 18,color: Colors.white),),
-                        Text("Notes",style: TextStyle(fontSize: 18,color: Colors.white),),
-                      ],
-                    ),
+                Container(
+                  height: 160,
+                  width: 200,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(120),
+                      gradient: LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [
+                            Color(0xff9b4700),
+                            Color(0xffd07e03),
+
+                          ]
+                      )
                   ),
-                )
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text("Chemistry",style: TextStyle(fontWeight: FontWeight.w900,fontSize: 18,color: Colors.white),),
+                      Text("Notes",style: TextStyle(fontSize: 18,color: Colors.white),),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 10,),
+                Container(
+                  height: 160,
+                  width: 200,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(120),
+                      gradient: const LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [
+                            Color(0xff420957),
+                            Color(0xff730093),
+                          ]
+                      )
+                  ),
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text("English",style: TextStyle(fontWeight: FontWeight.w900,fontSize: 18,color: Colors.white),),
+                      Text("Notes",style: TextStyle(fontSize: 18,color: Colors.white),),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 10,),
+                Container(
+                  height: 160,
+                  width: 200,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(120),
+                      gradient: LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [
+                            Color(0xff004f01),
+                            Color(0xff1faf5b),
+                          ]
+                      )
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text("اردو",style: TextStyle(fontWeight: FontWeight.w900,fontSize: 30,color: Colors.white,fontFamily: "jameel"),),
+                      Text("نوٹس",style: TextStyle(fontSize: 26,color: Colors.white,fontFamily: 'jameel'),),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 20,)
               ],
             ),
           ),
           SizedBox(height: 20,),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Expanded(
-                  child: Container(
-                    height: 160,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Color(0xffdf07a0),
-                              Color(0xffc20291),
-                              Color(0xffa403b0),
-                            ]
-                        )
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text("English",style: TextStyle(fontWeight: FontWeight.w900,fontSize: 18,color: Colors.white),),
-                        Text("Notes",style: TextStyle(fontSize: 18,color: Colors.white),),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(width: 10,),
-                Expanded(
-                  child: Container(
-                    height: 160,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Color(0xff04de09),
-                              Color(0xff03c407),
-                              Color(0xff018602),
-                            ]
-                        )
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text("اردو",style: TextStyle(fontWeight: FontWeight.w900,fontSize: 30,color: Colors.white,fontFamily: "jameel"),),
-                        Text("نوٹس",style: TextStyle(fontSize: 26,color: Colors.white,fontFamily: 'jameel'),),
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          SizedBox(height: 20,)
         ],
       ),
-    );
+    ),
+);
   }
 }

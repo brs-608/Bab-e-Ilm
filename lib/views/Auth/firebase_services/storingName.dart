@@ -21,13 +21,13 @@ class UserInfoFireStore{
       print(error.toString());
     });
   }
-  Future<Map<String, dynamic>?> getUserInfo(String email) async {
+  Future<Map<String, dynamic>> getUserInfo(String email) async {
     DocumentSnapshot userDoc = await firestoreInst.collection('users').doc(email).get();
 
     if (userDoc.exists) {
       return userDoc.data() as Map<String, dynamic>;
     } else {
-      return null;
+      return {"fullName" : "THERE IS NO DATA"};
     }
   }
     Future<void> storingDOBAndGender(String email, String dateOfBirth, String gender) async {

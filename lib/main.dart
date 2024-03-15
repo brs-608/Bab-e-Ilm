@@ -1,6 +1,8 @@
-import 'package:bab_e_ilm/provider/likes_dislike_provider.dart';
-import 'package:bab_e_ilm/provider/selectedSubject.dart';
-import 'package:bab_e_ilm/provider/videoPlayer.dart';
+import 'package:bab_e_ilm/Bloc/Auth/auth_bloc.dart';
+import 'package:bab_e_ilm/Bloc/HomePages/user_info_bloc.dart';
+import 'package:bab_e_ilm/Bloc/LikeDislike/like_dislike_bloc.dart';
+import 'package:bab_e_ilm/Bloc/SelectedSubject/selected_subject_bloc.dart';
+import 'package:bab_e_ilm/Bloc/VideoPlayer/video_player_bloc.dart';
 import 'package:bab_e_ilm/views/Auth/screens/login_screen.dart';
 import 'package:bab_e_ilm/views/Auth/screens/register_screen.dart';
 import 'package:bab_e_ilm/views/Auth/screens/splash_screen.dart';
@@ -13,11 +15,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:async';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -34,11 +35,13 @@ class BabEIlm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
+    return MultiBlocProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => VideoPlayerState()),
-        ChangeNotifierProvider(create: (_) => SelectedSubjectProvider()),
-        ChangeNotifierProvider(create: (_) => LikeDislike()),
+        BlocProvider(create: (_) => UserInfoBloc()),
+        BlocProvider(create: (_) => VideoPlayerBloc()),
+        BlocProvider(create: (_) => SelectedSubjectBloc()),
+        BlocProvider(create: (_) => AuthBloc()),
+        BlocProvider(create: (_) => LikeDislikeBloc()),
       ],
       child: ResponsiveSizer(
         builder: (context,orientation,screenType){

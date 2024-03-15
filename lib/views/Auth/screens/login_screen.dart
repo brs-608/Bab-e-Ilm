@@ -1,13 +1,13 @@
+import 'package:bab_e_ilm/Bloc/HomePages/user_info_bloc.dart';
 import 'package:bab_e_ilm/views/Auth/firebase_services/storingName.dart';
 import 'package:bab_e_ilm/views/Auth/screens/register_screen.dart';
 import 'package:bab_e_ilm/views/Homepage/screens/home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../Bloc/Auth/auth_bloc.dart';
 import '../../../Utils/utilites.dart';
-class StoredEmail{
-  static String? email;
-}
 class GetInfo{
   static Map<String,dynamic>? info;
 }
@@ -21,8 +21,8 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
-  final _auth = FirebaseAuth.instance;
-  FirebaseFirestore inst = FirebaseFirestore.instance;
+
+  FirebaseFirestore inst= FirebaseFirestore.instance;
   bool obscure = true;
   @override
   void dispose() {
@@ -31,20 +31,30 @@ class _LoginScreenState extends State<LoginScreen> {
     emailController.dispose();
     passwordController.dispose();
   }
-  void storeEmail(){
-    StoredEmail.email = emailController.text.toString();
-  }
-  void storeUserInfo()async{
-    GetInfo.info = await UserInfoFireStore().getUserInfo(emailController.text.toString());
-  }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          child: Stack(
-            children: [
-              Container(
+    final authProvider = BlocProvider.of<AuthBloc>(context);
+    final dataProvider = BlocProvider.of<UserInfoBloc>(context);
+    print("BUILD");
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) async{
+      if(state is AuthFailure){
+        Utils().toastMessage(state.error);
+        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
+      }else if(state is AuthSuccess){
+        loading = state.loading;
+        dataProvider.add(StoreInfo(emailController.text.toString()));
+        await Future.delayed(Duration(seconds: 6));
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage(email: emailController.text.toString())));
+
+      }
+    },
+        child: Scaffold(
+          body: SingleChildScrollView(
+              child: Container(
+                child: Stack(
+                    children: [
+                     Container(
                 height: 180,
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -163,7 +173,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               ],
                             ),
                           ),
-                          Padding(padding:EdgeInsets.only(top: 60),child: Center(child: loading == true?CircularProgressIndicator(color: Colors.deepPurple,):null)),
+                          BlocBuilder<AuthBloc,AuthState>(
+                              builder: (context, state) {
+                              return Padding(
+                              padding:EdgeInsets.only(top: 60),
+                              child: Center(child: loading == true?CircularProgressIndicator(color: Colors.deepPurple,):null)
+                          );
+                      },
+                    ),
                         ],
                       ),
                       SizedBox(height: 20,),
@@ -177,25 +194,26 @@ class _LoginScreenState extends State<LoginScreen> {
                               )
                           ),
                           onPressed: ()async{
-                            if(_formKey.currentState!.validate()){
-                              setState(() {
-                                loading = true;
-                              });
-                              storeEmail();
-                              storeUserInfo();
-                              await _auth.signInWithEmailAndPassword(email: emailController.text.toString(), password: passwordController.text.toString()).then((value) {
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> HomePage(email: emailController.text.toString(),)));
-                              }).onError((error, stackTrace) {
-                                setState(() {
-                                  loading = false;
-                                });
-                                if(error.toString().contains("no user record")){
-                                  Utils().toastMessage("No user found ");
-                                }else{
-                                  Utils().toastMessage("Wrong Password!");
-                                }
-                              });
-                            }
+                            // if(_formKey.currentState!.validate()){
+                            //   setState(() {
+                            //     loading = true;
+                            //   });
+                            //   storeEmail();
+                            //   storeUserInfo();
+                            //   await _auth.signInWithEmailAndPassword(email: emailController.text.toString(), password: passwordController.text.toString()).then((value) {
+                            //     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> HomePage(email: emailController.text.toString(),)));
+                            //   }).onError((error, stackTrace) {
+                            //     setState(() {
+                            //       loading = false;
+                            //     });
+                            //     if(error.toString().contains("no user record")){
+                            //       Utils().toastMessage("No user found ");
+                            //     }else{
+                            //       Utils().toastMessage("Wrong Password!");
+                            //     }
+                            //   });
+                            // }
+                            authProvider.add(AuthLoginRequested(email: emailController.text.toString(),password: passwordController.text.toString()));
                           }, child: Padding(
                           padding: EdgeInsets.all(10),
                           child: Text("Login",style: TextStyle(fontSize: 16,color: Colors.white),))
@@ -217,6 +235,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
-    );
+    ),
+);
   }
 }

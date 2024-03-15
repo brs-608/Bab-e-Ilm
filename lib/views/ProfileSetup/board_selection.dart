@@ -150,7 +150,7 @@ class _BoardSetupState extends State<BoardSetup> {
                             },
                             child: Padding(
                                 padding: EdgeInsets.all(10),
-                                child: Text("Next",style: TextStyle(fontSize: 16),))
+                                child: Text("Next",style: TextStyle(fontSize: 16,color : Colors.white),))
                         ),
                         SizedBox(height: 20,),
                       ],

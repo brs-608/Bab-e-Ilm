@@ -80,6 +80,11 @@ class _AccountSetupState extends State<AccountSetup> {
    }
     bool loading = false;
    @override
+  void initState(){
+    // TODO: implement initState
+    super.initState();
+  }
+   @override
   Widget build(BuildContext context) {
     String _email = widget.email;
     return Scaffold(
@@ -315,7 +320,7 @@ class _AccountSetupState extends State<AccountSetup> {
                             },
                             child: Padding(
                                 padding: EdgeInsets.all(10),
-                                child: Text("Next",style: TextStyle(fontSize: 16),))
+                                child: Text("Next",style: TextStyle(fontSize: 16,color: Colors.white),))
                         ),
                         SizedBox(height: 20,),
                       ],

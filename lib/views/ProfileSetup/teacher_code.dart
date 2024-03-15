@@ -187,7 +187,7 @@ class _TeacherCodeState extends State<TeacherCode> {
                             }
                           }, child: Padding(
                           padding: EdgeInsets.all(10),
-                          child: Text("Create Account",style: TextStyle(fontSize: 16),))
+                          child: Text("Create Account",style: TextStyle(fontSize: 16,color: Colors.white),))
                       ),
                       SizedBox(height: 20,),
                       Row(

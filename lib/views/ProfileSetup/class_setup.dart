@@ -261,7 +261,7 @@ class _ClassSetupState extends State<ClassSetup> {
                             },
                             child: Padding(
                                 padding: EdgeInsets.all(10),
-                                child: Text("Create Account",style: TextStyle(fontSize: 16),))
+                                child: Text("Create Account",style: TextStyle(fontSize: 16,color: Colors.white),))
                         ),
                         SizedBox(height: 20,),
                       ],
@@ -432,7 +432,7 @@ class _OALavelsState extends State<OALavels> {
                             },
                             child: Padding(
                                 padding: EdgeInsets.all(10),
-                                child: Text("Create Account",style: TextStyle(fontSize: 16),))
+                                child: Text("Create Account",style: TextStyle(fontSize: 16,color: Colors.white),))
                         ),
                         SizedBox(height: 20,),
                       ],

@@ -31,8 +31,9 @@ class _SplashScreenState extends State<SplashScreen> {
             height: 130,
               width: 130,
               child: Image.asset("assets/11.png")),
-          SizedBox(height: 20,),
-          Container(alignment:Alignment.center,child: CircularProgressIndicator(color: Colors.deepPurple,)),
+          SizedBox(height: 5,),
+          // Container(alignment:Alignment.center,child: CircularProgressIndicator(color: Colors.deepPurple,)),
+          Center(child: Text("بابِ علم",style: TextStyle(color: Colors.black,fontFamily: "jameel",fontSize: 32,fontWeight: FontWeight.w900),))
         ]
 
       ),
