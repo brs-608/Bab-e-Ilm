@@ -16,6 +16,7 @@ class SubjectWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final RegExp english = RegExp(r'^[a-zA-Z]+');
+
     // final provider = Provider.of<SelectedSubjectProvider>(context);
     final selectedSubjectProvider = BlocProvider.of<SelectedSubjectBloc>(context);
     return BlocBuilder<UserInfoBloc, UserInfoState>(
