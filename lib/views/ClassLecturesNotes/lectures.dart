@@ -20,6 +20,7 @@ class Lectures extends StatefulWidget {
 class _LecturesState extends State<Lectures> {
   @override
   Widget build(BuildContext context) {
+    final RegExp english = RegExp(r'^[a-zA-Z]+');
     // var info = GetInfo.info;
     // final provider = Provider.of<VideoPlayerState>(context);
     // final subjectProvider = Provider.of<SelectedSubjectProvider>(context);
@@ -28,6 +29,19 @@ class _LecturesState extends State<Lectures> {
     return BlocBuilder<SelectedSubjectBloc, SelectedSubjectState>(
       builder: (context, state) {
         if (state is SelectedSubState) {
+          String className(){
+            String name = '';
+            if(state.subjectId[state.subjectId.length - 1] == "9"){
+              name = "نہم";
+            }else if(state.subjectId[state.subjectId.length - 1] == "10"){
+              name = "دہم";
+            }else if(state.subjectId[state.subjectId.length - 1] == "11"){
+              name = "یازدہم";
+            }else if(state.subjectId[state.subjectId.length - 1] == "12"){
+              name = "دوازدہم";
+            }
+            return name;
+          }
           Stream<QuerySnapshot> lectures() {
             // String? group = subjectProvider.subjectID;
             String group = state.subjectId;
@@ -129,10 +143,9 @@ class _LecturesState extends State<Lectures> {
               Padding(
                   padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                   child: Text(
-                    "${state.subjectName} Lectures for Class ${state
-                        .subjectId[state.subjectId.length - 1]}",
-                    style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w800, fontSize: 20),
+                    english.hasMatch(state.subjectName)?"${state.subjectName} Lectures for Class ${state.subjectId[state.subjectId.length - 1]}":"${state.subjectName} لیکچرز جماعت ${className()}     کے لیے ",
+                    style:english.hasMatch(state.subjectName)?GoogleFonts.poppins(
+                        fontWeight: FontWeight.w800, fontSize: 20):TextStyle(fontFamily: 'jameel',fontSize: 26,fontWeight: FontWeight.w800,color: Colors.black,wordSpacing: 2)
                   )),
               Expanded(
                 child: StreamBuilder<QuerySnapshot>(
@@ -171,68 +184,73 @@ class _LecturesState extends State<Lectures> {
 
                         return Padding(
                           padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Card(
-                            margin: EdgeInsets.symmetric(vertical: 10),
-                            elevation: 11,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            child: BlocBuilder<UserInfoBloc, UserInfoState>(
-                              builder: (context, state) {
-                                if(state is UserDataState){
-                                  final info = state.data;
-                                  return Container(
-                                    height: 180,
-                                    width: double.infinity,
-                                    child: ClipRRect(
-                                        borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                        child: InkWell(
-                                          onTap: () {
-                                            if (likes.contains(info["email"])) {
-                                              likeDislikeProvider.add(LikDisEvent({"videoTitle": title,"likeCount" : likes.length,"dislikeCount" : dislikes.length}, true, false));
-                                            } else if (dislikes.contains(info["email"])) {
-                                              likeDislikeProvider.add(LikDisEvent({"videoTitle": title,"likeCount" : likes.length,"dislikeCount" : dislikes.length}, false, true));
-                                            } else {
-                                              likeDislikeProvider.add(LikDisEvent({"videoTitle": title,"likeCount" : likes.length,"dislikeCount" : dislikes.length}, false, false));
-                                            }
-                                            // provider.lectureLink(video,title,thumbnail);
-                                            // print(video);
-                                            // likeDislikeProvider.setLikes(likes.length);
-                                            // likeDislikeProvider.setDislikes(dislikes.length);
-                                            Navigator.push(context, MaterialPageRoute(builder: (context) => VideoPlayerScreen(link: video.toString(), thumbnailLink: thumbnail.toString(),)));
-                                            },
-                                          borderRadius: BorderRadius.circular(10),
-                                          child: Stack(
-                                            children: [
-                                              Image.network(
+                          child: Column(
+                            crossAxisAlignment: english.hasMatch(title)?CrossAxisAlignment.start:CrossAxisAlignment.end,
+                            children: [
+                              Card(
+                                margin: EdgeInsets.symmetric(vertical: 10),
+                                elevation: 11,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: BlocBuilder<UserInfoBloc, UserInfoState>(
+                                  builder: (context, state) {
+                                    if(state is UserDataState){
+                                      final info = state.data;
+                                      return Container(
+                                        // height: 220,
+                                        width: double.infinity,
+
+                                        child: ClipRRect(
+                                            borderRadius:
+                                            BorderRadius.all(Radius.circular(10)),
+                                            child: InkWell(
+                                              onTap: () {
+                                                if (likes.contains(info["email"])) {
+                                                  likeDislikeProvider.add(LikDisEvent({"videoTitle": title,"likeCount" : likes.length,"dislikeCount" : dislikes.length}, true, false));
+                                                } else if (dislikes.contains(info["email"])) {
+                                                  likeDislikeProvider.add(LikDisEvent({"videoTitle": title,"likeCount" : likes.length,"dislikeCount" : dislikes.length}, false, true));
+                                                } else {
+                                                  likeDislikeProvider.add(LikDisEvent({"videoTitle": title,"likeCount" : likes.length,"dislikeCount" : dislikes.length}, false, false));
+                                                }
+                                                // provider.lectureLink(video,title,thumbnail);
+                                                // print(video);
+                                                // likeDislikeProvider.setLikes(likes.length);
+                                                // likeDislikeProvider.setDislikes(dislikes.length);
+                                                Navigator.push(context, MaterialPageRoute(builder: (context) => VideoPlayerScreen(link: video.toString(), thumbnailLink: thumbnail.toString(),)));
+                                                },
+                                              borderRadius: BorderRadius.circular(10),
+                                              child: Image.network(
                                                 thumbnail,
                                                 fit: BoxFit.cover,
                                                 width: double.infinity,
                                                 height: 180,
                                               ),
-                                              Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: 10,
-                                                      right: 10,
-                                                      top: 130),
-                                                  child: Text(
-                                                    title,
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontWeight: FontWeight.w800,
-                                                      fontSize: 18,
-                                                    ),
-                                                  ))
-                                            ],
-                                          ),
-                                        )),
-                                  );
-                                }else{
-                                  return Container();
-                                }
+                                            )),
+                                      );
+                                    }else{
+                                      return Container();
+                                    }
 
-                              },
-                            ),
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 5,right: 10),
+                                child: Text(
+                                  title ,
+                                  style: english.hasMatch(title)==false?TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: 22,
+                                      fontFamily: 'jameel',
+
+                                  ):GoogleFonts.poppins( color: Colors.black,
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 18,),
+                                  textAlign: english.hasMatch(title)?TextAlign.left:TextAlign.right,
+                                ),
+                              )
+                            ],
                           ),
                         );
                       }).toList(),

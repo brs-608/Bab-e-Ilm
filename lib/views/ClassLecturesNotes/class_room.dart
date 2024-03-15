@@ -320,7 +320,8 @@ class _ClassRoomState extends State<ClassRoom> {
                                   Text(sender,style: TextStyle(color: Colors.white,fontSize: 10),),
                                   Text(
                                     text,
-                                    style: english.hasMatch(text)==false?TextStyle(color: Colors.white,fontWeight: FontWeight.w800,fontSize: 18,fontFamily: "jameel"):GoogleFonts.roboto(color: Colors.white,fontWeight: FontWeight.w800,fontSize: 15,)
+                                    style: english.hasMatch(text)==false?TextStyle(color: Colors.white,fontWeight: FontWeight.w800,fontSize: 18,fontFamily: "jameel"):GoogleFonts.roboto(color: Colors.white,fontWeight: FontWeight.w800,fontSize: 15,),
+                                    textAlign: english.hasMatch(text)? TextAlign.left:TextAlign.right,
                                   ),
                                 ],
                               ),
@@ -332,7 +333,7 @@ class _ClassRoomState extends State<ClassRoom> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
+                  padding: const EdgeInsets.only(bottom: 5),
                   child: Container(
                     height: 70,
                     width: double.infinity,

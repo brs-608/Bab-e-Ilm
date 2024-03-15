@@ -14,6 +14,7 @@ class ClassScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final RegExp english = RegExp(r'^[a-zA-Z]+');
     // final provider = Provider.of<SelectedSubjectProvider>(context);
     return DefaultTabController(
         length: 3,
@@ -24,12 +25,25 @@ class ClassScreen extends StatelessWidget {
             title: BlocBuilder<SelectedSubjectBloc, SelectedSubjectState>(
               builder: (context, state) {
                 if(state is SelectedSubState){
+                  String className(){
+                    String name = '';
+                    if(state.subjectId[state.subjectId.length - 1] == "9"){
+                      name = "نہم";
+                    }else if(state.subjectId[state.subjectId.length - 1] == "10"){
+                      name = "دہم";
+                    }else if(state.subjectId[state.subjectId.length - 1] == "11"){
+                      name = "یازدہم";
+                    }else if(state.subjectId[state.subjectId.length - 1] == "12"){
+                      name = "دوازدہم";
+                    }
+                    return name;
+                  }
                   return Text(
-                    "${state.subjectName} Class ${state.subjectId[state.subjectId.length - 1]}",
-                    style: GoogleFonts.poppins(
+                    english.hasMatch(state.subjectName)?"${state.subjectName} Class ${state.subjectId[state.subjectId.length - 1]}":"${state.subjectName} جماعت ${className()}",
+                    style: english.hasMatch(state.subjectName)?GoogleFonts.poppins(
                         fontSize: 22,
                         fontWeight: FontWeight.w900,
-                        color: Colors.white),
+                        color: Colors.white):TextStyle(fontWeight: FontWeight.w900,fontSize: 26,fontFamily: 'jameel',color: Colors.white,wordSpacing: 5)
                   );
                 }else{
                   return Text("");

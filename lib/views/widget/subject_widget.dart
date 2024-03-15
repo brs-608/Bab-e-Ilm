@@ -15,6 +15,7 @@ class SubjectWidget extends StatelessWidget {
   // var info = GetInfo.info;
   @override
   Widget build(BuildContext context) {
+    final RegExp english = RegExp(r'^[a-zA-Z]+');
     // final provider = Provider.of<SelectedSubjectProvider>(context);
     final selectedSubjectProvider = BlocProvider.of<SelectedSubjectBloc>(context);
     return BlocBuilder<UserInfoBloc, UserInfoState>(
@@ -40,23 +41,28 @@ class SubjectWidget extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: Colors.deepPurple, width: 2)),
                   child: Row(
+                    mainAxisAlignment:english.hasMatch(subjectName)?MainAxisAlignment.start:MainAxisAlignment.end,
                     children: [
                       SizedBox(
                         width: 10,
                       ),
-                      Icon(
+                      english.hasMatch(subjectName)?Icon(
                         Icons.school,
                         color: Colors.deepPurple,
-                      ),
+                      ):Container(),
                       SizedBox(
                         width: 10,
                       ),
                       Text(
-                        "$subjectName Class",
-                        style: TextStyle(
+                        "$subjectName ${english.hasMatch(subjectName)?"Class":"کلاس"}",
+                        style: english.hasMatch(subjectName)?TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w900,
-                            color: Colors.deepPurple),
+                            color: Colors.deepPurple):TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w900,
+                            wordSpacing: 7,
+                            color: Colors.deepPurple,fontFamily: "jameel"),
                       ),
                       SizedBox(
                         width: 10,
@@ -77,7 +83,11 @@ class SubjectWidget extends StatelessWidget {
                             fontWeight: FontWeight.w900,
                             color: Colors.deepPurple),
                       )
-                          : Container()
+                          : Container(),english.hasMatch(subjectName)==false?Icon(
+                        Icons.school,
+                        color: Colors.deepPurple,
+                      ):Container(),
+                      SizedBox(width: 15,)
                     ],
                   ),
                 ),
