@@ -1,8 +1,10 @@
 import 'package:bab_e_ilm/Bloc/Auth/auth_bloc.dart';
 import 'package:bab_e_ilm/Bloc/HomePages/user_info_bloc.dart';
 import 'package:bab_e_ilm/Bloc/LikeDislike/like_dislike_bloc.dart';
+import 'package:bab_e_ilm/Bloc/ProfilePic/getting_pic_bloc.dart';
 import 'package:bab_e_ilm/Bloc/SelectedSubject/selected_subject_bloc.dart';
 import 'package:bab_e_ilm/Bloc/VideoPlayer/video_player_bloc.dart';
+import 'package:bab_e_ilm/Bloc/checking.dart';
 import 'package:bab_e_ilm/views/Auth/screens/login_screen.dart';
 import 'package:bab_e_ilm/views/Auth/screens/register_screen.dart';
 import 'package:bab_e_ilm/views/Auth/screens/splash_screen.dart';
@@ -42,6 +44,7 @@ class BabEIlm extends StatelessWidget {
         BlocProvider(create: (_) => SelectedSubjectBloc()),
         BlocProvider(create: (_) => AuthBloc()),
         BlocProvider(create: (_) => LikeDislikeBloc()),
+        BlocProvider(create: (_) => GettingPicBloc())
       ],
       child: ResponsiveSizer(
         builder: (context,orientation,screenType){
@@ -50,8 +53,9 @@ class BabEIlm extends StatelessWidget {
             theme: ThemeData(
               primaryColor: Colors.white,
             ),
-              debugShowCheckedModeBanner: false,
-              home: SplashScreen(),
+              debugShowCheckedModeBanner: true,
+              // home: SplashScreen(),
+            home: SplashScreen()
           );
         },
       ),

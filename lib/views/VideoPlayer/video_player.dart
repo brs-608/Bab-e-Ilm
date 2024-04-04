@@ -1,7 +1,9 @@
 import 'package:appinio_video_player/appinio_video_player.dart';
 import 'package:bab_e_ilm/Bloc/HomePages/user_info_bloc.dart';
 import 'package:bab_e_ilm/Bloc/LikeDislike/like_dislike_bloc.dart';
+import 'package:bab_e_ilm/Bloc/ProfilePic/getting_pic_bloc.dart';
 import 'package:bab_e_ilm/Bloc/SelectedSubject/selected_subject_bloc.dart';
+import 'package:bab_e_ilm/views/widget/comment_widget.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:video_player/video_player.dart';
-import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
 class VideoPlayerScreen extends StatefulWidget {
   String link;
   String thumbnailLink;
@@ -53,7 +55,21 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   //
   //   print('Detected language: $language');
   // }
-
+  TextEditingController questionController = TextEditingController();
+  void sentQuestion(String lectureName,String email,String question,String group){
+    FirebaseFirestore.instance.collection(group).doc(lectureName).collection("comments").doc(DateTime.now().toString()).set(
+        {
+          "sender" : email,
+          "question" : question,
+        }).then((value) {
+          setState(() {
+            
+          });
+      debugPrint("question delivered successfully");
+    }).onError((error, stackTrace) {
+      debugPrint(error.toString());
+    });
+  }
     @override
   Widget build(BuildContext context) {
     Locale locale = Localizations.localeOf(context);
@@ -63,12 +79,13 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     // final groupID = Provider.of<SelectedSubjectProvider>(context);
     // final likeDislikeProvider = Provider.of<LikeDislike>(context,listen: false);
     // var info = GetInfo.info;
-    bool comment = true;
+    // bool comment = true;
     final likeDislikeProvider = BlocProvider.of<LikeDislikeBloc>(context);
     final userInfoProvider = BlocProvider.of<UserInfoBloc>(context);
+    final profilePicProvider = BlocProvider.of<GettingPicBloc>(context);
     return BlocBuilder<SelectedSubjectBloc, SelectedSubjectState>(
       builder: (context, state) {
-        print(languageCode);
+        debugPrint(languageCode);
         if (state is SelectedSubState) {
           String groupName() {
             String group = state.subjectId;
@@ -116,9 +133,13 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                 return nameOfGroup = "lectureEnglish11";
               case "math11":
                 return nameOfGroup = "lectureMath11";
+              case "physics12":
+                return nameOfGroup = "lecturePhysics12";
+              case "urdu12":
+                return nameOfGroup = "lectureUrdu12";
 
               default:
-                print("no groups found");
+                debugPrint("no groups found");
             }
             return nameOfGroup = "";
           }
@@ -131,48 +152,266 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                 final String email = state.data["email"];
                 return SafeArea(
                   child: Scaffold(
-                    body: Container(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            Container(
-                              height: Device.screenType == ScreenType.mobile
-                                  ? 203
-                                  : 800,
-                              color: Colors.black,
-                              child: Stack(
-                                children: [
-                                  Center(
-                                      child: CircularProgressIndicator(
-                                    color: Colors.white,
-                                  )),
-                                  Center(
-                                    child: CustomVideoPlayer(
-                                      customVideoPlayerController:
-                                          chewieController,
+                    body: Column(
+                      children: [
+                        Container(
+                          height: Device.screenType == ScreenType.mobile
+                              ? 203
+                              : 800,
+                          color: Colors.black,
+                          child: Stack(
+                            children: [
+                              Center(
+                                  child: CircularProgressIndicator(
+                                color: Colors.white,
+                              )),
+                              Center(
+                                child: CustomVideoPlayer(
+                                  customVideoPlayerController:
+                                      chewieController,
+                    
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      SizedBox(height: 10,),
+                      state.data["comment"] == true? Expanded(
+                        flex: 1,
+                        child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              color: Colors.white
+                          ),
+                          child: Column(
+                            children: [
+                              SizedBox(height: 10,),
+                              Padding(
+                                padding: EdgeInsets.only(left: 20,right: 20),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    // SizedBox(width: 20,),
+                                    Text("Ask Questions !",style: GoogleFonts.poppins(color: Colors.black,fontWeight: FontWeight.w900,fontSize: 22),),
+                                    InkWell(
+                                      borderRadius: BorderRadius.circular(30),
+                                      onTap: (){
+                                        userInfoProvider.add(CommentInfoFalse(state.data["email"]));
+                                      },
+                                        child: Icon(Icons.arrow_drop_down_circle)),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: 30,),
+                              Expanded(
+                                child: Container(
 
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.withOpacity(0.1),
+                                    borderRadius: BorderRadius.only(topRight: Radius.circular(15),topLeft: Radius.circular(15))
+                                  ),
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      children: [
+                                    
+                                        SizedBox(height: 20,),
+                                        Padding(
+                                          padding: const EdgeInsets.only(right: 15),
+                                          child: Row(
+                                            children: [
+                                              SizedBox(width: 10,),
+                                              CircularProfileAvatar(
+                                                info['profilePic'] == null ? "" : info["profilePic"],
+                                                radius: 25,
+                                              ),
+                                              SizedBox(width: 10,),
+                                              Flexible(
+                                                child: Container(
+                                                  child: TextField(
+                                                    controller: questionController,
+                                                    decoration: InputDecoration(
+                                                      hintText: "Ask Questions!"
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              // TextField()
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 10,),
+                                        Padding(
+                                          padding: const EdgeInsets.only(right: 15),
+                                          child: BlocBuilder<LikeDislikeBloc, LikeDislikeState>(
+  builder: (context, state) {
+    if(state is LikDisState){
+      return ElevatedButton(
+          style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(
+                  Colors.black
+              )
+          ),
+          onPressed: (){
+            sentQuestion(state.videoData["videoTitle"], email, questionController.text.toString(), groupName());
+            questionController.clear();
+
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 10),
+            child: Text("Post",style: GoogleFonts.poppins(color: Colors.white,fontWeight: FontWeight.w800,fontSize: 16),),
+          )
+      );
+    }else{
+      return ElevatedButton(
+          style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(
+                  Colors.black
+              )
+          ),
+          onPressed: (){
+
+
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 10),
+            child: Text("Post",style: GoogleFonts.poppins(color: Colors.white,fontWeight: FontWeight.w800,fontSize: 16),),
+          )
+      );
+    }
+
+  },
+),
+                                        ),
+                                        Divider(),
+                                        SizedBox(height: 5,),
+                                        // StreamBuilder<QuerySnapshot>(
+                                        //     stream: FirebaseFirestore.instance.collection("lecturePhysics9").doc("Introduction To Physics").collection("comments").snapshots(),
+                                        //     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                                        //       if(!snapshot.hasData || snapshot.data!.docs.isEmpty){
+                                        //         return const Center(
+                                        //           child: Text("No Questions available",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
+                                        //         );
+                                        //       }else if(snapshot.connectionState == ConnectionState.waiting){
+                                        //         return Center(
+                                        //           child: Container(
+                                        //             width: 200,
+                                        //             height: 200,
+                                        //             child: CircularProgressIndicator(
+                                        //               color: Colors.deepPurpleAccent,
+                                        //             ),
+                                        //           ),
+                                        //         );
+                                        //       }else if(snapshot.hasError){
+                                        //         return const Center(
+                                        //           child: Text("Something went wrong!",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
+                                        //         );
+                                        //       }else{
+                                        //
+                                        //         final comments = snapshot.data!.docs;
+                                        //         final emails = comments.map((doc) {
+                                        //           final String senders = doc['sender'];
+                                        //           return senders;
+                                        //         }).toList();
+                                        //         profilePicProvider.add(StorePic(emails));
+                                        //         print(emails);
+                                        //         final commentWidget = comments.map((doc) {
+                                        //           final sender = doc["sender"];
+                                        //           final comment = doc['question'];
+                                        //
+                                        //
+                                        //           return BlocBuilder<GettingPicBloc, GettingPicState>(
+                                        //            builder: (context, state) {
+                                        //              if(state is GettingProPic){
+                                        //                return CommentWidget(state.profilePics[sender]!, sender, comment);
+                                        //              }else{
+                                        //                return CommentWidget("", sender, comment);
+                                        //              }
+                                        //
+                                        //           },
+                                        //         );
+                                        //         }).toList();
+                                        //
+                                        //         return SingleChildScrollView(
+                                        //           child: Column(
+                                        //             children: commentWidget
+                                        //           ),
+                                        //         );
+                                        //       }}
+                                        // )
+                                        BlocBuilder<LikeDislikeBloc, LikeDislikeState>(
+  builder: (context, state) {
+    if(state is LikDisState){
+      return FutureBuilder<QuerySnapshot>(
+        future: FirebaseFirestore.instance.collection(groupName()).doc(state.videoData['videoTitle']).collection("comments").get(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    child: CircularProgressIndicator(
+                      color: Colors.deepPurpleAccent,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          } else if (snapshot.hasError) {
+            return const Center(
+              child: Text("Something went wrong!", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900)),
+            );
+          } else {
+            final comments = snapshot.data!.docs;
+            final emails = comments.map((doc) => doc['sender'] as String).toList();
+            profilePicProvider.add(StorePic(emails));
+            final commentWidgets = comments.map((doc) {
+              final sender = doc["sender"];
+              final comment = doc['question'];
+              return BlocBuilder<GettingPicBloc, GettingPicState>(
+                builder: (context, state) {
+                  if (state is GettingProPic) {
+                    return CommentWidget(state.profilePics[sender] ?? "", sender, comment);
+                  } else {
+                    return CommentWidget("", sender, comment);
+                  }
+                },
+              );
+            }).toList();
+            return SingleChildScrollView(
+              child: Column(
+                children: commentWidgets,
+              ),
+            );
+          }
+        },
+      );
+    }else {
+      return Container();
+    }
+
+  },
+)
+                                      ],
                                     ),
                                   ),
-                                ],
+                                ),
                               ),
-                            ),
-                          state.data["comment"] == true? Container(
-                            height: 400,
-                            width: double.infinity,
-                            child: InkWell(
-                              onTap: (){
-                                userInfoProvider.add(CommentInfoFalse(state.data["email"]));
-                              },
-                              child: Card(
-                                elevation: 11,
-                              ),
-                            ),
-                          ):
-                          Column(
-                      children: [
-                      InkWell(
-                      onTap: () {},
-                      child: Container(
+                            ],
+                          ),
+                        ),
+                      ):
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                                            children: [
+                                            InkWell(
+                                            onTap: () {},
+                                            child: Container(
                           padding: EdgeInsets.symmetric(
                               horizontal: 15, vertical: 20),
                           alignment: Alignment.topLeft,
@@ -205,14 +444,14 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                               ),
                             ],
                           )),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    BlocBuilder<LikeDislikeBloc,
-                        LikeDislikeState>(
-                      builder: (context, state) {
-                        if (state is LikDisState) {
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          BlocBuilder<LikeDislikeBloc,
+                                              LikeDislikeState>(
+                                            builder: (context, state) {
+                                              if (state is LikDisState) {
                           return Row(
                             mainAxisAlignment:
                             MainAxisAlignment.spaceEvenly,
@@ -299,7 +538,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                               ),
                             ],
                           );
-                        } else {
+                                              } else {
                           return Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
@@ -396,22 +635,22 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                               ),
                             ],
                           );
-                        }
-                      },
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        userInfoProvider.add(CommentInfoTrue(state.data["email"]));
-                      },
-                      child: Container(
-                        margin: EdgeInsets.symmetric(
+                                              }
+                                            },
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              userInfoProvider.add(CommentInfoTrue(state.data["email"]));
+                                            },
+                                            child: Container(
+                                              margin: EdgeInsets.symmetric(
                             vertical: 10),
-                        padding: EdgeInsets.symmetric(
+                                              padding: EdgeInsets.symmetric(
                             horizontal: 20),
-                        child: Column(
+                                              child: Column(
                           children: [
                             Row(
                               mainAxisAlignment:
@@ -457,30 +696,30 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                               ],
                             )
                           ],
-                        ),
-                      ),
-                    ),
-                    StreamBuilder<QuerySnapshot>(
-                      stream: FirebaseFirestore.instance.collection("lecturePhysics9").snapshots(),
-                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot>snapshot) {
-                        if (snapshot.hasError) {
+                                              ),
+                                            ),
+                                          ),
+                                          StreamBuilder<QuerySnapshot>(
+                                            stream: FirebaseFirestore.instance.collection(groupName()).snapshots(),
+                                            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot>snapshot) {
+                                              if (snapshot.hasError) {
                           return Text('Error: ${snapshot.error}');
-                        }
-
-                        if (snapshot.connectionState == ConnectionState.waiting) {
+                                              }
+                                              
+                                              if (snapshot.connectionState == ConnectionState.waiting) {
                           return Center(
                             child: CircularProgressIndicator(),
                           );
-                        }
-
-                        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                                              }
+                                              
+                                              if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                           return Center(
                               child: Text('No Lectures yet!', style: GoogleFonts.poppins(fontWeight: FontWeight.w900, fontSize: 16),
                               ));
-                        }
-
-                        final messageDocs = snapshot.data!.docs;
-                        return Container(
+                                              }
+                                              
+                                              final messageDocs = snapshot.data!.docs;
+                                              return Container(
                           margin: EdgeInsets.only(bottom: 10),
                           child: Column(
                             children: messageDocs.map((doc) {
@@ -488,7 +727,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                               String title = data["title"] as String;
                               String thumbnail = data["thumbnailURL"] as String;
                               String video = data["videoURL"] as String;
-
+                                              
                               return Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 10),
                                 child: Card(
@@ -564,15 +803,15 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                               );
                             }).toList(),
                           ),
-                        );
-                      },
-                    ),
-                    ],
-                  ),
-
-                          ],
+                                              );
+                                            },
+                                          ),
+                                          ],
+                                        ),
                         ),
                       ),
+                    
+                      ],
                     ),
                   ),
                 );

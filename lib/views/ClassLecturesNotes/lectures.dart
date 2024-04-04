@@ -35,9 +35,9 @@ class _LecturesState extends State<Lectures> {
               name = "نہم";
             }else if(state.subjectId[state.subjectId.length - 1] == "10"){
               name = "دہم";
-            }else if(state.subjectId[state.subjectId.length - 1] == "11"){
+            }else if(state.subjectId[state.subjectId.length - 1] == "1"){
               name = "یازدہم";
-            }else if(state.subjectId[state.subjectId.length - 1] == "12"){
+            }else if(state.subjectId[state.subjectId.length - 1] == "2"){
               name = "دوازدہم";
             }
             return name;
@@ -131,9 +131,12 @@ class _LecturesState extends State<Lectures> {
                 return stream = FirebaseFirestore.instance
                     .collection("lectureMath11")
                     .snapshots();
-
+              case "physics12":
+                return stream = FirebaseFirestore.instance.collection("lecturePhysics12").snapshots();
+              case "urdu12":
+                return stream = FirebaseFirestore.instance.collection("lectureUrdu12").snapshots();
               default:
-                print("no groups found");
+                debugPrint("no groups found");
             }
             return stream;
           }

@@ -13,6 +13,8 @@ import 'package:provider/provider.dart';
 
 import '../../Auth/screens/login_screen.dart';
 import '../../ClassLecturesNotes/creatingGroup.dart';
+import '../../DrawerScreens/Customer Support/help.dart';
+import '../../DrawerScreens/subscription.dart';
 import 'classes.dart';
 import 'dashboard.dart';
 import 'lectures.dart';
@@ -257,7 +259,9 @@ class _HomePageState extends State<HomePage> {
                                       borderRadius: BorderRadius.circular(30))),
                               backgroundColor: MaterialStateProperty.all<Color>(
                                   Colors.deepPurple)),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>Subscription()));
+                          },
                           child: Text(
                             "  Subscribe  ",
                             style: TextStyle(color: Colors.white),
@@ -276,7 +280,8 @@ class _HomePageState extends State<HomePage> {
               children: [
                 ListTile(
                   onTap: () {
-                    Navigator.pop(context);
+                    Navigator.push(context,MaterialPageRoute(builder: (context)=>Subscription()));
+
                   },
                   leading: Icon(
                     Icons.credit_card,
@@ -304,7 +309,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 ListTile(
                   onTap: () {
-                    Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> Help()));
                   },
                   leading: const Icon(
                     Icons.help,

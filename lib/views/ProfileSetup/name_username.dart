@@ -6,7 +6,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:bab_e_ilm/views/Auth/screens/register_screen.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:googleapis/cloudsearch/v1.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import '../../Utils/utilites.dart';
@@ -27,9 +30,11 @@ class AccountSetup extends StatefulWidget {
 
 class _AccountSetupState extends State<AccountSetup> {
    String? gender;
+   DateTime? dateOfBirth;
+   late String formattedDate = DateFormat('d MMMM y').format(dateOfBirth==null?DateTime(2021):dateOfBirth!);
    final _formKey = GlobalKey<FormState>();
    final firestoreInst = FirebaseFirestore.instance;
-   TextEditingController dateOfBirthController = TextEditingController();
+   // TextEditingController dateOfBirthController = TextEditingController();
    String? profilePicUrl;
    Future<void> uploadToStorage(File imgFile) async {
      if (imgFile == null) {
@@ -86,6 +91,9 @@ class _AccountSetupState extends State<AccountSetup> {
   }
    @override
   Widget build(BuildContext context) {
+     print("build");
+
+     print(dateOfBirth);
     String _email = widget.email;
     return Scaffold(
         body: SingleChildScrollView(
@@ -157,7 +165,45 @@ class _AccountSetupState extends State<AccountSetup> {
                           padding: EdgeInsets.symmetric(horizontal: 20),
                           child: Form(
                             key: _formKey,
-                            child: TextFormField(
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(10),
+                              onTap: ()async{
+                                DateTime? pickedDate = await showDatePicker(
+                                    context: context,
+                                    firstDate: DateTime(1900),
+                                    lastDate: DateTime(2015)
+                                ).then((value) {
+                                  if(value != null){
+                                     dateOfBirth = value;
+                                     setState(() {
+
+                                     });
+                                     print(dateOfBirth);
+                                  }else{
+                                    return dateOfBirth = null;
+                                  }
+
+                                });
+                              },
+                              child: Container(
+
+                                height: 60,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(color: Colors.black)
+                                ),
+                                child: Row(
+                                  children: [
+                                    SizedBox(width: 10,),
+                                    Icon(Icons.date_range,color: Colors.deepPurple,),
+                                    SizedBox(width: 10,),
+                                    Text(dateOfBirth == null?"Select Your Date Of Birth":formattedDate,style: GoogleFonts.poppins(color: Colors.deepPurple,fontWeight: FontWeight.w800,),),
+                                  ],
+                                ),
+                              ),
+                            )/*TextFormField(
                               controller: dateOfBirthController,
                                 keyboardType: TextInputType.datetime,
                                 style: TextStyle(color: Colors.deepPurple),
@@ -187,7 +233,7 @@ class _AccountSetupState extends State<AccountSetup> {
                                     return null;
                                   }
                               },
-                            ),
+                            ),*/
                           ),
                         ),
                         SizedBox(height: 20,),
@@ -311,8 +357,10 @@ class _AccountSetupState extends State<AccountSetup> {
 
                                 if(gender == null){
                                   Utils().toastMessage("Please select your gender");
+                                }else if(dateOfBirth == null){
+                                  Utils().toastMessage("Please select your Date Of Birth");
                                 }else{
-                                  UserInfoFireStore().storingDOBAndGender(_email, dateOfBirthController.text.toString(), gender!);
+                                  UserInfoFireStore().storingDOBAndGender(_email, dateOfBirth!, gender!);
                                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>UserRole()));
                                 }
                               }

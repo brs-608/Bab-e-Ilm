@@ -27,19 +27,19 @@ class ClassScreen extends StatelessWidget {
                 if(state is SelectedSubState){
                   String className(){
                     String name = '';
-                    if(state.subjectId[state.subjectId.length - 1] == "9"){
+                    if(state.subjectId.endsWith("9")){
                       name = "نہم";
-                    }else if(state.subjectId[state.subjectId.length - 1] == "10"){
+                    }else if(state.subjectId.endsWith("10")){
                       name = "دہم";
-                    }else if(state.subjectId[state.subjectId.length - 1] == "11"){
+                    }else if(state.subjectId.endsWith("11")){
                       name = "یازدہم";
-                    }else if(state.subjectId[state.subjectId.length - 1] == "12"){
+                    }else if(state.subjectId.endsWith("12")){
                       name = "دوازدہم";
                     }
                     return name;
                   }
                   return Text(
-                    english.hasMatch(state.subjectName)?"${state.subjectName} Class ${state.subjectId[state.subjectId.length - 1]}":"${state.subjectName} جماعت ${className()}",
+                    english.hasMatch(state.subjectName)?"${state.subjectName} Class ${state.subjectId[state.subjectId.length - 1] == "0"? "10":state.subjectId[state.subjectId.length - 1] == "1"?"11":state.subjectId[state.subjectId.length - 1] == "2"?"12":"9"}":"${state.subjectName} جماعت ${className()}",
                     style: english.hasMatch(state.subjectName)?GoogleFonts.poppins(
                         fontSize: 22,
                         fontWeight: FontWeight.w900,

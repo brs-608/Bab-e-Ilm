@@ -2,6 +2,7 @@ import 'package:bab_e_ilm/Bloc/HomePages/user_info_bloc.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 import '../../Auth/screens/login_screen.dart';
 
@@ -9,6 +10,7 @@ class EditProfile extends StatelessWidget {
   const EditProfile({super.key});
   @override
   Widget build(BuildContext context) {
+
     // var info = GetInfo.info;
     // String? gradeInString = info?["grade"].toString();
     return BlocBuilder<UserInfoBloc, UserInfoState>(
@@ -16,6 +18,7 @@ class EditProfile extends StatelessWidget {
     if(state is UserDataState){
       var info = state.data;
       String gradeInString = info["grade"].toString();
+      String formattedDate = DateFormat('d MMMM y').format(info['dateOfBirth'].toDate());
       return Scaffold(
         appBar: AppBar(
           leading: InkWell(onTap: (){Navigator.pop(context);},borderRadius:BorderRadius.circular(30),child: Icon(Icons.arrow_back,color: Colors.white,),),
@@ -193,7 +196,7 @@ class EditProfile extends StatelessWidget {
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(info!["dateOfBirth"],style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.bold),),
+                                        Text(formattedDate.toString(),style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.bold),),
                                         Row(
                                           children: [
                                             Icon(Icons.edit,color: Colors.deepPurple,)

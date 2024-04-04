@@ -30,7 +30,7 @@ class UserInfoFireStore{
       return {"fullName" : "THERE IS NO DATA"};
     }
   }
-    Future<void> storingDOBAndGender(String email, String dateOfBirth, String gender) async {
+    Future<void> storingDOBAndGender(String email, DateTime dateOfBirth, String gender) async {
 
       // Check if the document exists before updating
       final userDocRef = firestoreInst.collection('users').doc(email);

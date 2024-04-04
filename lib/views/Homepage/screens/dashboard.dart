@@ -107,7 +107,7 @@ class _DashboardState extends State<Dashboard> {
                           fit: BoxFit.cover,
                         ),
                         Image.asset(
-                          'assets/5.jpg',
+                          'assets/10.jpg',
                           fit: BoxFit.cover,
                         ),
                         // ... Add more images or widgets

@@ -1,3 +1,4 @@
+import 'package:bab_e_ilm/Bloc/HomePages/user_info_bloc.dart';
 import 'package:bab_e_ilm/Utils/utilites.dart';
 import 'package:bab_e_ilm/views/Auth/firebase_services/storingName.dart';
 import 'package:bab_e_ilm/views/Auth/screens/register_screen.dart';
@@ -5,6 +6,7 @@ import 'package:bab_e_ilm/views/Homepage/screens/home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../Auth/screens/login_screen.dart';
@@ -23,8 +25,8 @@ class _ClassSetupState extends State<ClassSetup> {
   void storeUserInfo()async{
     GetInfo.info = await UserInfoFireStore().getUserInfo(widget.email);
   }
-  burhan(int grade1) async {
-    var info1 = GetInfo.info;
+    addingMemberToGroup(int grade1) async {
+    // var info1 = GetInfo.info;
     final grade2 = grade1;
     final collectionReference = FirebaseFirestore.instance.collection("groups");
     final user = RegisterEmail.email;
@@ -48,16 +50,21 @@ class _ClassSetupState extends State<ClassSetup> {
           await collectionReference.doc(doc.id).update({
             "members": FieldValue.arrayUnion([user.toString()])
           });
+        }else if(subjectID.endsWith("12")&&grade2==12){
+          await collectionReference.doc(doc.id).update({
+            "members" : FieldValue.arrayUnion([user.toString()])
+          });
         }
       }
-      print("Work done successfully");
+      debugPrint("Work done successfully");
     } catch (e) {
-      print("Error occurred");
-      print(e.toString());
+      debugPrint("Error occurred");
+      debugPrint(e.toString());
     }
   }
   @override
   Widget build(BuildContext context) {
+    final userInfoProvider = BlocProvider.of<UserInfoBloc>(context);
     String _email = widget.email;
     return Scaffold(
         body: SingleChildScrollView(
@@ -254,16 +261,16 @@ class _ClassSetupState extends State<ClassSetup> {
                                 Utils().toastMessage("Please select your grade");
                               }else{
                                 await UserInfoFireStore().storingGrade(_email, grade!);
-                                await burhan(grade!);
-                                storeUserInfo();
+                                await addingMemberToGroup(grade!);
+                                userInfoProvider.add(StoreInfo(_email));
                                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage(email: RegisterEmail.email!,)));
                               }
                             },
-                            child: Padding(
+                            child: const Padding(
                                 padding: EdgeInsets.all(10),
                                 child: Text("Create Account",style: TextStyle(fontSize: 16,color: Colors.white),))
                         ),
-                        SizedBox(height: 20,),
+                        const SizedBox(height: 20,),
                       ],
                     ),
                   ),
@@ -292,6 +299,7 @@ class _OALavelsState extends State<OALavels> {
   }
   @override
   Widget build(BuildContext context) {
+    final userInfoProvider = BlocProvider.of<UserInfoBloc>(context);
     String _email = widget.email;
     return Scaffold(
         body: SingleChildScrollView(
@@ -426,6 +434,7 @@ class _OALavelsState extends State<OALavels> {
                                 Utils().toastMessage("Please select your grade");
                               }else{
                                 await UserInfoFireStore().storingGrade(_email, grade!);
+                                userInfoProvider.add(StoreInfo(_email));
                                 storeUserInfo();
                                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage(email: RegisterEmail.email!,)));
                               }

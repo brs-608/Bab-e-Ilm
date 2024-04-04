@@ -174,10 +174,22 @@ class _ClassRoomState extends State<ClassRoom> {
                     'sender': sender,
                     'timestamp': FieldValue.serverTimestamp(),
                   });
+                  case "physics12":
+                  await FirebaseFirestore.instance.collection('messagePhysics12').doc(DateTime.now().toString()).set({
+                    'text': text,
+                    'sender': sender,
+                    'timestamp': FieldValue.serverTimestamp(),
+                  });
+                  case "urdu12":
+                  await FirebaseFirestore.instance.collection('messageUrdu12').doc(DateTime.now().toString()).set({
+                    'text': text,
+                    'sender': sender,
+                    'timestamp': FieldValue.serverTimestamp(),
+                  });
 
 
                 default:
-                  print("no groups found");
+                  debugPrint("no groups found");
               }
             }
             Stream<QuerySnapshot> messages() {
@@ -225,6 +237,10 @@ class _ClassRoomState extends State<ClassRoom> {
                   return stream = FirebaseFirestore.instance.collection("messageEnglish11").orderBy("timestamp").snapshots();
                 case "math11":
                   return stream = FirebaseFirestore.instance.collection("messageMath11").orderBy("timestamp").snapshots();
+                case "physics12":
+                  return stream = FirebaseFirestore.instance.collection("messagePhysics12").orderBy("timestamp").snapshots();
+                case "urdu12":
+                  return stream = FirebaseFirestore.instance.collection("messageUrdu12").orderBy("timestamp").snapshots();
 
                 default:
                   print("no groups found");
@@ -410,7 +426,3 @@ class _ClassRoomState extends State<ClassRoom> {
 );
   }
 }
-// var info = GetInfo.info;
-// var name = info!["fullName"];
-// var email = info!["email"];
-// var userName = info!["userName"];
