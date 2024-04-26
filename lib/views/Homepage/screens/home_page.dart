@@ -2,6 +2,9 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:bab_e_ilm/Bloc/HomePages/user_info_bloc.dart';
 import 'package:bab_e_ilm/Utils/utilites.dart';
 import 'package:bab_e_ilm/views/Auth/firebase_services/storingName.dart';
+import 'package:bab_e_ilm/views/DrawerScreens/feedback.dart';
+import 'package:bab_e_ilm/views/DrawerScreens/settings/setting.dart';
+// import 'package:bab_e_ilm/views/DrawerScreens/feedback.dart';
 import 'package:bab_e_ilm/views/Homepage/screens/profile.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -64,6 +67,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     // final provider = Provider.of<EmailProvider>(context);
+    ThemeData theme = Theme.of(context);
+    Brightness brightness = theme.brightness;
     return Scaffold(
       key: _homePage,
       appBar: PreferredSize(
@@ -224,8 +229,10 @@ class _HomePageState extends State<HomePage> {
                                       "${state.data["fullName"]}",
                                       style: GoogleFonts.nunito(
                                           fontSize: 16,
-                                          color: Colors.black,
+                                          color:brightness == Brightness.dark?Colors.white.withOpacity(0.8):
+                                          Colors.black,
                                           fontWeight: FontWeight.w900),
+                                        // 0xff9053fd
                                     );
                                   }
                                   return Text("data");
@@ -237,7 +244,9 @@ class _HomePageState extends State<HomePage> {
                                     return Text(
                                       "${state.data["email"]}",
                                       style: TextStyle(
-                                          color: Colors.blue, fontSize: 10),
+                                          color:brightness == Brightness.dark?Color(
+                                              0xff5dc4f3):
+                                          Colors.blue, fontSize: 10),
                                       maxLines: 2,
                                     );
                                   }
@@ -295,7 +304,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 ListTile(
                   onTap: () {
-                    Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Setting()));
                   },
                   leading: Icon(
                     Icons.settings,
@@ -323,7 +332,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 ListTile(
                   onTap: () {
-                    Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> FeedbackScreen()));
                   },
                   leading: const Icon(
                     Icons.chat_bubble_outline,

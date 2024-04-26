@@ -21,6 +21,8 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    Brightness brightness = theme.brightness;
     // String _email = widget.email;
     Map<String,dynamic>? infoUser;
     final info = BlocProvider.of<UserInfoBloc>(context);
@@ -40,7 +42,8 @@ class _DashboardState extends State<Dashboard> {
               BlocBuilder<UserInfoBloc, UserInfoState>(
                builder: (context, state) {
                   if(state is UserDataState){
-                    return Text("Hi,${state.data["fullName"]}",style: TextStyle(fontWeight: FontWeight.w900,fontSize: 22,color: Colors.deepPurple),);
+                    return Text("Hi,${state.data["fullName"]}",style: TextStyle(fontWeight: FontWeight.w900,fontSize: 22,color:brightness == Brightness.dark?Color(0xffeceaf5):
+                    Colors.deepPurple),);
                   }
                   return Text("Hi");
               },
@@ -56,7 +59,7 @@ class _DashboardState extends State<Dashboard> {
               borderRadius: BorderRadius.circular(10),
               color: Colors.grey.withOpacity(0.1),
               border: Border.all(
-                color: Colors.deepPurple,
+                color: Color(0xffa029ff),
                 width: 2
               )
             ),
@@ -139,7 +142,8 @@ class _DashboardState extends State<Dashboard> {
             ),
           ),
           SizedBox(height: 20,),
-          Container(alignment:Alignment.topLeft,padding:EdgeInsets.only(left: 20),child: Text("Announcements 📌",style: TextStyle(fontSize: 22,fontWeight: FontWeight.w900,color: Colors.deepPurple),)),
+          Container(alignment:Alignment.topLeft,padding:EdgeInsets.only(left: 20),child: Text("Announcements 📌",style: TextStyle(fontSize: 22,fontWeight: FontWeight.w900,color:brightness == Brightness.dark?Color(0xffeceaf5):
+          Colors.deepPurple),)),
           SizedBox(height: 10,),
           Container(
               padding: EdgeInsets.symmetric(horizontal: 20),
@@ -149,15 +153,19 @@ class _DashboardState extends State<Dashboard> {
                     color: Colors.grey.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
-                        color: Colors.deepPurple,
+                        color:brightness == Brightness.dark?Color(0xffa029ff):Colors.deepPurple,
                         width: 2
                     )
                 ),
-                child: Padding(padding:EdgeInsets.symmetric(horizontal: 10,vertical: 10),child: Text("Bab-e-Ilm is the educational app and it is created by Burhan Shaikh. Soon we will upload lectures on this app.",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w900,color: Colors.deepPurple),maxLines: 3,)),
+                child: Padding(padding:EdgeInsets.symmetric(horizontal: 10,vertical: 10),child: Text("Bab-e-Ilm is the educational app and it is created by Burhan Shaikh. Soon we will upload lectures on this app.",
+                  style: TextStyle(fontSize: 16,fontWeight: FontWeight.w900,
+                      color:brightness == Brightness.dark?Color(0xffeceaf5):
+                Colors.deepPurple),maxLines: 3,)),
               )
           ),
           SizedBox(height: 20,),
-          Container(alignment:Alignment.topLeft,padding:EdgeInsets.only(left: 20),child: Text("Notes Shortcuts ❤",style: TextStyle(fontSize: 22,fontWeight: FontWeight.w900,color: Colors.deepPurple),)),
+          Container(alignment:Alignment.topLeft,padding:EdgeInsets.only(left: 20),child: Text("Notes Shortcuts ❤",style: TextStyle(fontSize: 22,fontWeight: FontWeight.w900,color:brightness == Brightness.dark?Color(0xffeceaf5):
+          Colors.deepPurple),)),
           SizedBox(height: 20,),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
@@ -166,17 +174,14 @@ class _DashboardState extends State<Dashboard> {
               children: [
                 SizedBox(width: 20,),
                 Container(
-                  height: 160,
-                  width: 200,
+                  height: 200,
+                  width: 150,
                   decoration: BoxDecoration(
-                    // shape: BoxShape.circle,
-                      borderRadius: BorderRadius.circular(120),
+                      borderRadius: BorderRadius.circular(50),
                       gradient: LinearGradient(
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                          colors: [
-                            Color(0xff0b001c),
-                            Color(0xff4803f8),
+                          colors:[
+                            Color(0xffff9955),
+                            Color(0xffef782c),
 
                           ]
                       )
@@ -184,23 +189,21 @@ class _DashboardState extends State<Dashboard> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text("Physics",style: TextStyle(fontWeight: FontWeight.w900,fontSize: 18,color: Colors.white),),
-                      Text("Notes",style: TextStyle(fontSize: 18,color: Colors.white),),
+                      Text("Notes for ",style: TextStyle(color: Colors.white),),
+                      Text("Physics",style: TextStyle(fontWeight: FontWeight.w900,color: Colors.white),)
                     ],
                   ),
                 ),
                 SizedBox(width: 10,),
                 Container(
-                  height: 160,
-                  width: 200,
+                  height: 200,
+                  width: 150,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(120),
+                      borderRadius: BorderRadius.circular(50),
                       gradient: LinearGradient(
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                          colors: [
-                            Color(0xff9b4700),
-                            Color(0xffd07e03),
+                          colors:[
+                            Color(0xff9053fd),
+                            Color(0xff630ffa),
 
                           ]
                       )
@@ -208,54 +211,52 @@ class _DashboardState extends State<Dashboard> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text("Chemistry",style: TextStyle(fontWeight: FontWeight.w900,fontSize: 18,color: Colors.white),),
-                      Text("Notes",style: TextStyle(fontSize: 18,color: Colors.white),),
+                      Text("Notes for ",style: TextStyle(color: Colors.white),),
+                      Text("Chemistry",style: TextStyle(fontWeight: FontWeight.w900,color: Colors.white),)
                     ],
                   ),
                 ),
                 SizedBox(width: 10,),
                 Container(
-                  height: 160,
-                  width: 200,
+                  height: 200,
+                  width: 150,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(120),
-                      gradient: const LinearGradient(
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                          colors: [
-                            Color(0xff420957),
-                            Color(0xff730093),
-                          ]
-                      )
-                  ),
-                  child: const Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text("English",style: TextStyle(fontWeight: FontWeight.w900,fontSize: 18,color: Colors.white),),
-                      Text("Notes",style: TextStyle(fontSize: 18,color: Colors.white),),
-                    ],
-                  ),
-                ),
-                SizedBox(width: 10,),
-                Container(
-                  height: 160,
-                  width: 200,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(120),
+                      borderRadius: BorderRadius.circular(50),
                       gradient: LinearGradient(
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                          colors: [
-                            Color(0xff004f01),
-                            Color(0xff1faf5b),
+                          colors:[
+                            Color(0xffea59f3),
+                            Color(0xffd416e8),
+
                           ]
                       )
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text("اردو",style: TextStyle(fontWeight: FontWeight.w900,fontSize: 30,color: Colors.white,fontFamily: "jameel"),),
-                      Text("نوٹس",style: TextStyle(fontSize: 26,color: Colors.white,fontFamily: 'jameel'),),
+                      Text("نوٹس برائے",style: TextStyle(color: Colors.white,fontFamily: 'jameel',fontSize: 20,fontWeight: FontWeight.w500),),
+                      Text("اردو",style: TextStyle(fontWeight: FontWeight.w900,color: Colors.white,fontSize: 24,fontFamily: 'jameel',),)
+                    ],
+                  ),
+                ),
+                SizedBox(width: 10,),
+                Container(
+                  height: 200,
+                  width: 150,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      gradient: LinearGradient(
+                          colors:[
+                            Color(0xff5bbff3),
+                            Color(0xff1f9eee),
+
+                          ]
+                      )
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text("نوٹس برائے",style: TextStyle(color: Colors.white,fontFamily: 'jameel',fontSize: 20,fontWeight: FontWeight.w500),),
+                      Text("اسلامیات",style: TextStyle(fontWeight: FontWeight.w900,color: Colors.white,fontSize: 24,fontFamily: 'jameel',),)
                     ],
                   ),
                 ),

@@ -19,7 +19,7 @@ class ClassScreen extends StatelessWidget {
     return DefaultTabController(
         length: 3,
         child: Scaffold(
-          backgroundColor: Colors.white,
+          // backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.deepPurple,
             title: BlocBuilder<SelectedSubjectBloc, SelectedSubjectState>(

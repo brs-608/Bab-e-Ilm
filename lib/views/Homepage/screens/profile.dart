@@ -28,6 +28,8 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     DateTime creationDate = user!.metadata.creationTime!;
     String formattedDate = DateFormat('d MMMM y').format(creationDate);
+    ThemeData theme = Theme.of(context);
+    Brightness brightness = theme.brightness;
     // var info = GetInfo.info;
     // String role = info!['UserRole'];
     
@@ -75,12 +77,12 @@ class _ProfileState extends State<Profile> {
               ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                        Colors.white
+                        brightness == Brightness.dark?Colors.black.withOpacity(0.5):Colors.white
                     ),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           side: BorderSide(
-                              color: Colors.deepPurple
+                              color: brightness == Brightness.dark?Color(0xffa029ff):Colors.deepPurple
                           ),
                           borderRadius: BorderRadius.circular(30),
                         )
@@ -90,7 +92,7 @@ class _ProfileState extends State<Profile> {
                   onPressed: (){
                     Navigator.push(context, MaterialPageRoute(builder: (context)=>EditProfile()));
                   }
-                  , child: Padding(padding: EdgeInsets.symmetric(horizontal: 10,vertical: 2),child: Text("Edit Profile Details",style: TextStyle(color: Colors.deepPurple),))),
+                  , child: Padding(padding: EdgeInsets.symmetric(horizontal: 10,vertical: 2),child: Text("Edit Profile Details",style: TextStyle(color: brightness == Brightness.dark?Color(0xffeceaf5):Colors.deepPurple),))),
               SizedBox(height: 25,),
               CardDetailRow(clr: Colors.grey.withOpacity(0.2), icon: Icons.email, type: 'Email', val: '${info['email']}',),
               SizedBox(height: 15,),
@@ -111,7 +113,10 @@ class _ProfileState extends State<Profile> {
                       ),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30)
+                            side: BorderSide(
+                                color: brightness == Brightness.dark?Color(0xffa029ff):Colors.transparent
+                            ),
+                              borderRadius: BorderRadius.circular(30),
                           )
                       )
                   ),

@@ -80,6 +80,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     // final likeDislikeProvider = Provider.of<LikeDislike>(context,listen: false);
     // var info = GetInfo.info;
     // bool comment = true;
+    ThemeData theme = Theme.of(context);
+    Brightness brightness = theme.brightness;
     final likeDislikeProvider = BlocProvider.of<LikeDislikeBloc>(context);
     final userInfoProvider = BlocProvider.of<UserInfoBloc>(context);
     final profilePicProvider = BlocProvider.of<GettingPicBloc>(context);
@@ -286,60 +288,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                         ),
                                         Divider(),
                                         SizedBox(height: 5,),
-                                        // StreamBuilder<QuerySnapshot>(
-                                        //     stream: FirebaseFirestore.instance.collection("lecturePhysics9").doc("Introduction To Physics").collection("comments").snapshots(),
-                                        //     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                                        //       if(!snapshot.hasData || snapshot.data!.docs.isEmpty){
-                                        //         return const Center(
-                                        //           child: Text("No Questions available",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
-                                        //         );
-                                        //       }else if(snapshot.connectionState == ConnectionState.waiting){
-                                        //         return Center(
-                                        //           child: Container(
-                                        //             width: 200,
-                                        //             height: 200,
-                                        //             child: CircularProgressIndicator(
-                                        //               color: Colors.deepPurpleAccent,
-                                        //             ),
-                                        //           ),
-                                        //         );
-                                        //       }else if(snapshot.hasError){
-                                        //         return const Center(
-                                        //           child: Text("Something went wrong!",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
-                                        //         );
-                                        //       }else{
-                                        //
-                                        //         final comments = snapshot.data!.docs;
-                                        //         final emails = comments.map((doc) {
-                                        //           final String senders = doc['sender'];
-                                        //           return senders;
-                                        //         }).toList();
-                                        //         profilePicProvider.add(StorePic(emails));
-                                        //         print(emails);
-                                        //         final commentWidget = comments.map((doc) {
-                                        //           final sender = doc["sender"];
-                                        //           final comment = doc['question'];
-                                        //
-                                        //
-                                        //           return BlocBuilder<GettingPicBloc, GettingPicState>(
-                                        //            builder: (context, state) {
-                                        //              if(state is GettingProPic){
-                                        //                return CommentWidget(state.profilePics[sender]!, sender, comment);
-                                        //              }else{
-                                        //                return CommentWidget("", sender, comment);
-                                        //              }
-                                        //
-                                        //           },
-                                        //         );
-                                        //         }).toList();
-                                        //
-                                        //         return SingleChildScrollView(
-                                        //           child: Column(
-                                        //             children: commentWidget
-                                        //           ),
-                                        //         );
-                                        //       }}
-                                        // )
                                         BlocBuilder<LikeDislikeBloc, LikeDislikeState>(
   builder: (context, state) {
     if(state is LikDisState){
@@ -426,7 +374,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                       child: Text(
                                         "${state.videoData["videoTitle"]}",
                                         maxLines: 2,
-                                        style: english.hasMatch(state.videoData["videoTitle"]) == false? const TextStyle(color: Colors.black, fontSize: 28, fontWeight: FontWeight.w900,fontFamily:"jameel"):GoogleFonts.poppins(color: Colors.black, fontSize: 22, fontWeight: FontWeight.w900,)
+                                        style: english.hasMatch(state.videoData["videoTitle"]) == false?  TextStyle(color: brightness == Brightness.dark?Colors.white.withOpacity(0.8):Colors.black, fontSize: 28, fontWeight: FontWeight.w900,fontFamily:"jameel"):GoogleFonts.poppins(color: brightness == Brightness.dark?Colors.white.withOpacity(0.8):Colors.black, fontSize: 22, fontWeight: FontWeight.w900,)
                                       ),
                                     );
                                   } else {

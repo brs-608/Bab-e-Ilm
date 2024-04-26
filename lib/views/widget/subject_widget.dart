@@ -16,7 +16,8 @@ class SubjectWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final RegExp english = RegExp(r'^[a-zA-Z]+');
-
+    ThemeData theme = Theme.of(context);
+    Brightness brightness = theme.brightness;
     // final provider = Provider.of<SelectedSubjectProvider>(context);
     final selectedSubjectProvider = BlocProvider.of<SelectedSubjectBloc>(context);
     return BlocBuilder<UserInfoBloc, UserInfoState>(
@@ -40,7 +41,7 @@ class SubjectWidget extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: Colors.grey.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.deepPurple, width: 2)),
+                      border: Border.all(color:brightness == Brightness.dark?Color(0xffa029ff):Colors.deepPurple, width: 2)),
                   child: Row(
                     mainAxisAlignment:english.hasMatch(subjectName)?MainAxisAlignment.start:MainAxisAlignment.end,
                     children: [
@@ -49,7 +50,8 @@ class SubjectWidget extends StatelessWidget {
                       ),
                       english.hasMatch(subjectName)?Icon(
                         Icons.school,
-                        color: Colors.deepPurple,
+                        color:brightness == Brightness.dark?Color(0xffeceaf5):
+                      Colors.deepPurple,
                       ):Container(),
                       SizedBox(
                         width: 10,
@@ -59,11 +61,13 @@ class SubjectWidget extends StatelessWidget {
                         style: english.hasMatch(subjectName)?TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w900,
-                            color: Colors.deepPurple):TextStyle(
+                            color:brightness == Brightness.dark?Color(0xffeceaf5):
+                            Colors.deepPurple):TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.w900,
                             wordSpacing: 7,
-                            color: Colors.deepPurple,fontFamily: "jameel"),
+                            color:brightness == Brightness.dark?Color(0xffeceaf5):
+                            Colors.deepPurple,fontFamily: "jameel"),
                       ),
                       SizedBox(
                         width: 10,
@@ -82,11 +86,13 @@ class SubjectWidget extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w900,
-                            color: Colors.deepPurple),
+                            color:brightness == Brightness.dark?Color(0xffeceaf5):
+                            Colors.deepPurple),
                       )
                           : Container(),english.hasMatch(subjectName)==false?Icon(
                         Icons.school,
-                        color: Colors.deepPurple,
+                        color:brightness == Brightness.dark?Color(0xffeceaf5):
+                        Colors.deepPurple,
                       ):Container(),
                       SizedBox(width: 15,)
                     ],

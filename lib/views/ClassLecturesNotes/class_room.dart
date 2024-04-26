@@ -34,7 +34,8 @@ class _ClassRoomState extends State<ClassRoom> {
     // final provider = Provider.of<SelectedSubjectProvider>(context);
     // String? group = provider.subjectID;
     // String group = "Ali";
-
+    ThemeData theme = Theme.of(context);
+    Brightness brightness = theme.brightness;
 
     return BlocBuilder<UserInfoBloc, UserInfoState>(
 
@@ -362,7 +363,7 @@ class _ClassRoomState extends State<ClassRoom> {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(30),
                                 border: Border.all(
-                                    color: Colors.deepPurple,
+                                    color:brightness == Brightness.dark?Color(0xffa029ff):Colors.deepPurple,
                                     width: 2
                                 )
                             ),
@@ -394,19 +395,19 @@ class _ClassRoomState extends State<ClassRoom> {
 
                                   ),
                                 ),
-                                IconButton(onPressed: (){}, icon: Icon(Icons.attach_file,color: Colors.deepPurple,)),
+                                IconButton(onPressed: (){}, icon: Icon(Icons.attach_file,color:brightness == Brightness.dark?Color(0xffa029ff):Colors.deepPurple,)),
                                 IconButton(onPressed: ()async{
                                   if(_formKey.currentState!.validate()){
                                     await sendMessage(msgController.text.toString(), userName);
                                     msgController.clear();
                                   }
-                                }, icon: Icon(Icons.send,color: Colors.deepPurple,)),
+                                }, icon: Icon(Icons.send,color:brightness == Brightness.dark?Color(0xffa029ff):Colors.deepPurple,)),
                               ],
                             ),
                           ),
                         ),
                         IconButton(
-                            onPressed: (){}, icon: Icon(Icons.mic,color: Colors.deepPurple,))
+                            onPressed: (){}, icon: Icon(Icons.mic,color:brightness == Brightness.dark?Color(0xffa029ff):Colors.deepPurple,))
                       ],
                     ),
                   ),

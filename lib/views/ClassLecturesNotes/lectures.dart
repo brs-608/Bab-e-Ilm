@@ -20,6 +20,8 @@ class Lectures extends StatefulWidget {
 class _LecturesState extends State<Lectures> {
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    Brightness brightness = theme.brightness;
     final RegExp english = RegExp(r'^[a-zA-Z]+');
     // var info = GetInfo.info;
     // final provider = Provider.of<VideoPlayerState>(context);
@@ -148,7 +150,7 @@ class _LecturesState extends State<Lectures> {
                   child: Text(
                     english.hasMatch(state.subjectName)?"${state.subjectName} Lectures for Class ${state.subjectId[state.subjectId.length - 1]}":"${state.subjectName} لیکچرز جماعت ${className()}     کے لیے ",
                     style:english.hasMatch(state.subjectName)?GoogleFonts.poppins(
-                        fontWeight: FontWeight.w800, fontSize: 20):TextStyle(fontFamily: 'jameel',fontSize: 26,fontWeight: FontWeight.w800,color: Colors.black,wordSpacing: 2)
+                        fontWeight: FontWeight.w800, fontSize: 20,color:brightness == Brightness.dark?Colors.white.withOpacity(0.8):Colors.black):TextStyle(fontFamily: 'jameel',fontSize: 26,fontWeight: FontWeight.w800,color:brightness == Brightness.dark?Colors.white.withOpacity(0.8):Colors.black,wordSpacing: 2)
                   )),
               Expanded(
                 child: StreamBuilder<QuerySnapshot>(
@@ -170,7 +172,7 @@ class _LecturesState extends State<Lectures> {
                           child: Text(
                             'No Lectures yet!',
                             style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w900, fontSize: 16),
+                                fontWeight: FontWeight.w900, fontSize: 16,color:brightness == Brightness.dark?Colors.white.withOpacity(0.8):Colors.deepPurple),
                           ));
                     }
 
@@ -242,12 +244,12 @@ class _LecturesState extends State<Lectures> {
                                 child: Text(
                                   title ,
                                   style: english.hasMatch(title)==false?TextStyle(
-                                      color: Colors.black,
+                                    color:brightness == Brightness.dark?Color(0xffa029ff):Colors.deepPurple,
                                       fontWeight: FontWeight.w800,
                                       fontSize: 22,
                                       fontFamily: 'jameel',
 
-                                  ):GoogleFonts.poppins( color: Colors.black,
+                                  ):GoogleFonts.poppins( color:brightness == Brightness.dark?Colors.white.withOpacity(0.8):Colors.deepPurple,
                                     fontWeight: FontWeight.w800,
                                     fontSize: 18,),
                                   textAlign: english.hasMatch(title)?TextAlign.left:TextAlign.right,

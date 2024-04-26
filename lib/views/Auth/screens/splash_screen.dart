@@ -27,13 +27,15 @@ class _SplashScreenState extends State<SplashScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children:[
-          Container(
-            height: 130,
-              width: 130,
-              child: Image.asset("assets/11.png")),
+          Center(
+            child: Container(
+              height: 130,
+                width: 130,
+                child: Image.asset("assets/25.png")),
+          ),
           SizedBox(height: 5,),
           // Container(alignment:Alignment.center,child: CircularProgressIndicator(color: Colors.deepPurple,)),
-          Center(child: Text("بابِ علم",style: TextStyle(color: Colors.black,fontFamily: "jameel",fontSize: 32,fontWeight: FontWeight.w900),))
+          // Center(child: Text("بابِ علم",style: TextStyle(color: Colors.black,fontFamily: "jameel",fontSize: 32,fontWeight: FontWeight.w900),))
         ]
 
       ),

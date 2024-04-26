@@ -93,7 +93,7 @@ class Subscription extends StatelessWidget {
                                   padding: EdgeInsets.only(top: 30,right: 5,left: 55),
                                   alignment: Alignment.centerRight,
                                     child: Text("PKR",style: GoogleFonts.poppins(color: Colors.black,fontSize: 14,fontWeight: FontWeight.w500),)),
-                                Text("600",style: GoogleFonts.poppins(color: Colors.black,fontSize: 60,fontWeight: FontWeight.w900),),
+                                Text("600",style: GoogleFonts.oswald(color: Colors.black,fontSize: 60,fontWeight: FontWeight.w900),),
                                 Container(
                                   padding: EdgeInsets.only(top: 30,left: 5),
                                     child: Text("for 3 month",style: GoogleFonts.poppins(color: Colors.black,fontSize: 14,fontWeight: FontWeight.w500),)),
@@ -153,7 +153,7 @@ class Subscription extends StatelessWidget {
                                   padding: EdgeInsets.only(top: 30,right: 5,left: 45),
                                   alignment: Alignment.centerRight,
                                     child: Text("PKR",style: GoogleFonts.poppins(color: Colors.black,fontSize: 14,fontWeight: FontWeight.w500),)),
-                                Text("1200",style: GoogleFonts.poppins(color: Colors.black,fontSize: 60,fontWeight: FontWeight.w900),),
+                                Text("1200",style: GoogleFonts.oswald(color: Colors.black,fontSize: 60,fontWeight: FontWeight.w900),),
                                 Container(
                                   padding: EdgeInsets.only(top: 30,left: 5),
                                     child: Text("for 3 month",style: GoogleFonts.poppins(color: Colors.black,fontSize: 14,fontWeight: FontWeight.w500),)),
