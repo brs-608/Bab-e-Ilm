@@ -10,6 +10,8 @@ class FeedbackComment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    Brightness brightness = theme.brightness;
     return Column(
       children: [
         Row(
@@ -33,8 +35,8 @@ class FeedbackComment extends StatelessWidget {
                       // crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("${name}",style: TextStyle(color: Colors.black),),
-                        Text("${duration}",style: TextStyle(color: Colors.black.withOpacity(0.5)),)
+                        Text("${name}",style: TextStyle(color: brightness == Brightness.light?Colors.black:Colors.white.withOpacity(0.9)),),
+                        Text("${duration}",style: TextStyle(color: brightness == Brightness.light?Colors.black:Colors.white.withOpacity(0.9)),)
                       ],
                     ),
                     Row(
@@ -48,7 +50,7 @@ class FeedbackComment extends StatelessWidget {
                           itemSize: 20,
                         ),
                         SizedBox(width: 5,),
-                        Text("(${rating})",style: TextStyle(color: Colors.black.withOpacity(0.5)),)
+                        Text("(${rating})",style: TextStyle(color: brightness == Brightness.light?Colors.black.withOpacity(0.5):Colors.white.withOpacity(0.8)),)
                       ],
                     )
                   ],

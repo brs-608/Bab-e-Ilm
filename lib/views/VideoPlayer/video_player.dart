@@ -72,6 +72,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   }
     @override
   Widget build(BuildContext context) {
+
     Locale locale = Localizations.localeOf(context);
     String languageCode = locale.languageCode;
     final RegExp english = RegExp(r'^[a-zA-Z]+');
@@ -183,7 +184,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                         child: Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
-                              color: Colors.white
+                              color: brightness == Brightness.light?Colors.white:Colors.black
                           ),
                           child: Column(
                             children: [
@@ -194,13 +195,13 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     // SizedBox(width: 20,),
-                                    Text("Ask Questions !",style: GoogleFonts.poppins(color: Colors.black,fontWeight: FontWeight.w900,fontSize: 22),),
+                                    Text("Ask Questions !",style: GoogleFonts.poppins(color: brightness == Brightness.dark?Colors.white:Colors.black,fontWeight: FontWeight.w900,fontSize: 22),),
                                     InkWell(
                                       borderRadius: BorderRadius.circular(30),
                                       onTap: (){
                                         userInfoProvider.add(CommentInfoFalse(state.data["email"]));
                                       },
-                                        child: Icon(Icons.arrow_drop_down_circle)),
+                                        child: Icon(Icons.arrow_drop_down_circle,)),
                                   ],
                                 ),
                               ),
@@ -210,7 +211,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
                                   width: double.infinity,
                                   decoration: BoxDecoration(
-                                      color: Colors.grey.withOpacity(0.1),
+                                      color: brightness == Brightness.dark?Colors.grey.withOpacity(0.2):Colors.grey.withOpacity(0.1),
                                     borderRadius: BorderRadius.only(topRight: Radius.circular(15),topLeft: Radius.circular(15))
                                   ),
                                   child: SingleChildScrollView(
@@ -251,7 +252,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     if(state is LikDisState){
       return ElevatedButton(
           style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(
+              backgroundColor: WidgetStateProperty.all<Color>(
                   Colors.black
               )
           ),
@@ -268,7 +269,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     }else{
       return ElevatedButton(
           style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(
+              backgroundColor: WidgetStateProperty.all<Color>(
                   Colors.black
               )
           ),
@@ -328,6 +329,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                     return CommentWidget("", sender, comment);
                   }
                 },
+
               );
             }).toList();
             return SingleChildScrollView(
@@ -418,7 +420,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(30),
                                         // color: value.isLiked == true? Colors.black:Colors.transparent,
-                                        color: state.isLiked==true?Colors.black:Colors.transparent,
+                                        color: state.isLiked==true?brightness == Brightness.light?Colors.black:Colors.white.withOpacity(0.3):brightness == Brightness.dark?Colors.white.withOpacity(0.1):Colors.transparent,
                                         border: Border.all(
                                           color: state.isLiked == true? Colors.transparent:Colors.black.withOpacity(0.8),)),
                                     // color: Colors
@@ -429,13 +431,13 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                       children: [
                                         // Icon(Icons.thumb_up_off_alt,color: value.isLiked == true? Colors.white:Colors.black),
                                         Icon(
-                                            Icons.thumb_up_off_alt,
-                                            color: state.isLiked==true?Colors.white:Colors.black),
+                                            state.isLiked ?brightness == Brightness.dark?Icons.thumb_up_alt_rounded:Icons.thumb_up_off_alt_outlined:Icons.thumb_up_off_alt_outlined,
+                                          color: state.isLiked==true?brightness == Brightness.light?Colors.white:Colors.white:brightness == Brightness.dark?Colors.white:Colors.black,),
                                         SizedBox(
                                           width: 5,
                                         ),
                                         // Text("dsfdf",style: GoogleFonts.poppins(color: value.isLiked == true?Colors.white:Colors.black,fontWeight: FontWeight.w600),)
-                                        Text(state.videoData["likeCount"] != 0?"${state.videoData["likeCount"]}":"Like", style: GoogleFonts.poppins(color: state.isLiked == true?Colors.white:Colors.black, fontWeight: FontWeight.w600),)
+                                        Text(state.videoData["likeCount"] != 0?"${state.videoData["likeCount"]}":"Like", style: GoogleFonts.poppins(color: state.isLiked==true?brightness == Brightness.light?Colors.white:Colors.white:brightness == Brightness.dark?Colors.white:Colors.black, fontWeight: FontWeight.w600),)
                                       ],
                                     )),
                               ),
@@ -452,19 +454,24 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                       decoration:
                                       BoxDecoration(
                                           borderRadius: BorderRadius.circular(30),
-                                          color: state.isDisliked == true? Colors.black:Colors.transparent,
+                                          color:state.isDisliked==true?brightness == Brightness.light?Colors.black:Colors.white.withOpacity(0.3):brightness == Brightness.dark?Colors.white.withOpacity(0.1):Colors.transparent,
                                           // color: Colors
                                           //     .transparent,
                                           border: Border.all(color: state.isDisliked == true?Colors.transparent:Colors.black.withOpacity(0.8))),
                                       child: Row(
                                         children: [
                                           // Icon(Icons.thumb_down_off_alt,color: value.isDisliked == true? Colors.white:Colors.black,),
-                                          Icon(Icons.thumb_down_off_alt, color: state.isDisliked==true?Colors.white:Colors.black,),
+                                          Icon(state.isDisliked ?brightness == Brightness.dark?Icons.thumb_down_alt_rounded:Icons.thumb_down_off_alt_rounded:Icons.thumb_down_off_alt_rounded, color: state.isDisliked==true?brightness == Brightness.light?Colors.white:Colors.white:brightness == Brightness.dark?Colors.white:Colors.black,),
                                           SizedBox(
                                             width: 5,
                                           ),
                                           // Text("${value.dislikes == 0?"Dislike":value.dislikes}",style: GoogleFonts  .poppins(color: value.isDisliked == true ?Colors.white:Colors.black,fontWeight: FontWeight.w600),)
-                                          Text(state.videoData["dislikeCount"] != 0 ?"${state.videoData["dislikeCount"]}":"Dislike", style: GoogleFonts.poppins(color: state.isDisliked?Colors.white:Colors.black, fontWeight: FontWeight.w600),)
+                                          Text(
+                                            state.videoData["dislikeCount"] != 0 ?"${state.videoData["dislikeCount"]}":"Dislike",
+                                            style: GoogleFonts.poppins(
+                                                // state.isDisliked==true?brightness == Brightness.light?Colors.black:Colors.white.withOpacity(0.3):brightness == Brightness.dark?Colors.white.withOpacity(0.1):Colors.transparent,
+                                                color: state.isDisliked==true?brightness == Brightness.light?Colors.white:Colors.white:brightness == Brightness.dark?Colors.white:Colors.black,
+                                                fontWeight: FontWeight.w600),)
                                         ],
                                       ))),
                               InkWell(
@@ -474,13 +481,14 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                 child: Container(
                                     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                                     decoration: BoxDecoration(
+                                      color: brightness == Brightness.light? Colors.transparent:Colors.white.withOpacity(0.1),
                                         borderRadius: BorderRadius.circular(30),
                                         border: Border.all(color: Colors.black.withOpacity(0.8))),
                                     child: Row(
                                       children: [
-                                        Icon(Icons.save_alt),
+                                        Icon(Icons.save_alt,color: brightness == Brightness.light?Colors.black:Colors.white,),
                                         SizedBox(width: 5,),
-                                        Text("Save", style: GoogleFonts.poppins(color: Colors.black, fontWeight: FontWeight.w600),)
+                                        Text("Save", style: GoogleFonts.poppins(color: brightness == Brightness.light?Colors.black:Colors.white, fontWeight: FontWeight.w600),)
                                       ],
                                     )),
                               ),
@@ -614,7 +622,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                 ),
                                 Icon(
                                   Icons.arrow_drop_up,
-                                  color: Colors.black,
+                                    color: brightness == Brightness.light?Colors.black:Colors.white
                                 )
                               ],
                             ),
@@ -725,12 +733,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                               ),
                                               Padding(
                                                   padding: EdgeInsets.only(
-                                                      left:
-                                                      10,
-                                                      right:
-                                                      10,
-                                                      top:
-                                                      130),
+                                                      left:10,
+                                                      right:10,
+                                                      top:130),
                                                   child: Text(
                                                     title,
                                                     style:

@@ -7,14 +7,16 @@ class Subscription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    Brightness brightness = theme.brightness;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.transparent,
         leading: IconButton(onPressed: (){
           Navigator.pop(context);
-        },icon: Icon(Icons.arrow_back,color: Colors.black,),),
-        title: Text("Subscription",style: GoogleFonts.poppins(color: Colors.black,fontWeight: FontWeight.w900)),
+        },icon: Icon(Icons.arrow_back,color: brightness == Brightness.dark?Colors.white.withOpacity(0.8):Colors.black,),),
+        title: Text("Subscription",style: GoogleFonts.poppins(color: brightness == Brightness.dark?Colors.white.withOpacity(0.8):Colors.black,fontWeight: FontWeight.w900)),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -64,7 +66,7 @@ class Subscription extends StatelessWidget {
               Container(
                 alignment: Alignment.centerLeft,
                   padding: EdgeInsets.only(left: 30,bottom: 20),
-                  child: Text("Packages",style: GoogleFonts.poppins(fontWeight: FontWeight.w900,fontSize: 26,color: Colors.black),)),
+                  child: Text("Packages",style: GoogleFonts.poppins(fontWeight: FontWeight.w900,fontSize: 26,color: brightness == Brightness.dark?Colors.white.withOpacity(0.8):Colors.black),)),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Padding(
@@ -76,14 +78,14 @@ class Subscription extends StatelessWidget {
                         width: 330,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Colors.deepPurpleAccent.withOpacity(0.1)
+                          color: brightness == Brightness.dark?Colors.grey.withOpacity(0.3):Colors.deepPurple.withOpacity(0.1)
                         ),
                         child: Column(
                           children: [
                             SizedBox(height: 20,),
-                            Icon(FontAwesomeIcons.paperPlane,color: Colors.deepPurple,size: 48,),
+                            Icon(FontAwesomeIcons.paperPlane,color: brightness == Brightness.dark?Colors.white.withOpacity(0.8):Colors.deepPurple,size: 48,),
                             SizedBox(height: 10,),
-                            Text("STARTER",style: GoogleFonts.poppins(color: Colors.deepPurple,fontSize: 18,fontWeight: FontWeight.w900),),
+                            Text("STARTER",style: GoogleFonts.poppins(color: brightness == Brightness.dark?Colors.white.withOpacity(0.8):Colors.deepPurple,fontSize: 18,fontWeight: FontWeight.w900),),
                             SizedBox(height: 15,),
                             Row(
 
@@ -92,24 +94,24 @@ class Subscription extends StatelessWidget {
                                 Container(
                                   padding: EdgeInsets.only(top: 30,right: 5,left: 55),
                                   alignment: Alignment.centerRight,
-                                    child: Text("PKR",style: GoogleFonts.poppins(color: Colors.black,fontSize: 14,fontWeight: FontWeight.w500),)),
-                                Text("600",style: GoogleFonts.oswald(color: Colors.black,fontSize: 60,fontWeight: FontWeight.w900),),
+                                    child: Text("PKR",style: GoogleFonts.poppins(color: brightness == Brightness.dark?Colors.white.withOpacity(0.8):Colors.black,fontSize: 14,fontWeight: FontWeight.w500),)),
+                                Text("699",style: GoogleFonts.oswald(color: brightness == Brightness.dark?Colors.white.withOpacity(0.8):Colors.black,fontSize: 60,fontWeight: FontWeight.w900),),
                                 Container(
                                   padding: EdgeInsets.only(top: 30,left: 5),
-                                    child: Text("for 3 month",style: GoogleFonts.poppins(color: Colors.black,fontSize: 14,fontWeight: FontWeight.w500),)),
+                                    child: Text("for 3 month",style: GoogleFonts.poppins(color: brightness == Brightness.dark?Colors.white.withOpacity(0.8):Colors.black,fontSize: 14,fontWeight: FontWeight.w500),)),
 
                               ],
                             ),
                             Padding(
                               padding: const EdgeInsets.only(left: 30,right: 30),
-                              child: Divider(),
+                              child: Divider(color: brightness == Brightness.dark?Colors.white.withOpacity(0.8):null,),
                             ),
                             SizedBox(height: 20,),
                             Column(
                               children: [
-                                Text("Get notes of all subjects",style: GoogleFonts.poppins(color: Colors.black,fontSize: 14,fontWeight: FontWeight.w500),),
+                                Text("Get notes of all subjects",style: GoogleFonts.poppins(color: brightness == Brightness.dark?Colors.white.withOpacity(0.8):Colors.black,fontSize: 14,fontWeight: FontWeight.w500),),
                                 SizedBox(height: 10,),
-                                Text("Add free experience",style: GoogleFonts.poppins(color: Colors.black,fontSize: 14,fontWeight: FontWeight.w500),)
+                                Text("Add free experience",style: GoogleFonts.poppins(color: brightness == Brightness.dark?Colors.white.withOpacity(0.8):Colors.black,fontSize: 14,fontWeight: FontWeight.w500),)
 
                               ],
                             ),
@@ -117,7 +119,7 @@ class Subscription extends StatelessWidget {
                             ElevatedButton(
                               style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.deepPurple
+                                  brightness == Brightness.dark?Colors.white.withOpacity(0.8):Colors.deepPurple
                                 ),
                                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                   RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
@@ -125,25 +127,25 @@ class Subscription extends StatelessWidget {
                               ),
                                 onPressed: (){}, child: Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 15),
-                                  child: Text("Get Started",style: GoogleFonts.poppins(color: Colors.white,fontWeight: FontWeight.w800),),
+                                  child: Text("Get Started",style: GoogleFonts.poppins(color: brightness == Brightness.dark?Colors.black.withOpacity(0.6):Colors.white,fontWeight: FontWeight.w800),),
                                 ))
                           ],
                         ),
                       ),
                       SizedBox(width: 10,),
-                      Container(
+                       Container(
                         height: 450,
                         width: 330,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Colors.deepPurpleAccent.withOpacity(0.1)
+                          color: brightness == Brightness.dark?Colors.grey.withOpacity(0.3):Colors.deepPurple.withOpacity(0.1)
                         ),
                         child: Column(
                           children: [
                             SizedBox(height: 20,),
-                            Icon(FontAwesomeIcons.rocket,color: Colors.deepPurple,size: 48,),
+                            Icon(FontAwesomeIcons.rocket,color: brightness == Brightness.dark?Colors.white.withOpacity(0.8):Colors.deepPurple,size: 48,),
                             SizedBox(height: 10,),
-                            Text("PREMIUM",style: GoogleFonts.poppins(color: Colors.deepPurple,fontSize: 18,fontWeight: FontWeight.w900),),
+                            Text("PREMIUM",style: GoogleFonts.poppins(color: brightness == Brightness.dark?Colors.white.withOpacity(0.8):Colors.deepPurple,fontSize: 18,fontWeight: FontWeight.w900),),
                             SizedBox(height: 15,),
                             Row(
 
@@ -152,26 +154,26 @@ class Subscription extends StatelessWidget {
                                 Container(
                                   padding: EdgeInsets.only(top: 30,right: 5,left: 45),
                                   alignment: Alignment.centerRight,
-                                    child: Text("PKR",style: GoogleFonts.poppins(color: Colors.black,fontSize: 14,fontWeight: FontWeight.w500),)),
-                                Text("1200",style: GoogleFonts.oswald(color: Colors.black,fontSize: 60,fontWeight: FontWeight.w900),),
+                                    child: Text("PKR",style: GoogleFonts.poppins(color: brightness == Brightness.dark?Colors.white.withOpacity(0.8):Colors.black,fontSize: 14,fontWeight: FontWeight.w500),)),
+                                Text("1999",style: GoogleFonts.oswald(color: brightness == Brightness.dark?Colors.white.withOpacity(0.8):Colors.black,fontSize: 60,fontWeight: FontWeight.w900),),
                                 Container(
                                   padding: EdgeInsets.only(top: 30,left: 5),
-                                    child: Text("for 3 month",style: GoogleFonts.poppins(color: Colors.black,fontSize: 14,fontWeight: FontWeight.w500),)),
+                                    child: Text("for 3 month",style: GoogleFonts.poppins(color: brightness == Brightness.dark?Colors.white.withOpacity(0.8):Colors.black,fontSize: 14,fontWeight: FontWeight.w500),)),
 
                               ],
                             ),
                             Padding(
                               padding: const EdgeInsets.only(left: 30,right: 30),
-                              child: Divider(),
+                              child: Divider(color: brightness == Brightness.dark?Colors.white.withOpacity(0.8):null,),
                             ),
                             SizedBox(height: 20,),
                             Column(
                               children: [
-                                Text("All the facilities of starter package",style: GoogleFonts.poppins(color: Colors.black,fontSize: 14,fontWeight: FontWeight.w500),),
+                                Text("All the facilites of starter package",style: GoogleFonts.poppins(color: brightness == Brightness.dark?Colors.white.withOpacity(0.8):Colors.black,fontSize: 14,fontWeight: FontWeight.w500),),
                                 SizedBox(height: 10,),
-                                Text("Interactive live classes",style: GoogleFonts.poppins(color: Colors.black,fontSize: 14,fontWeight: FontWeight.w500),),
+                                Text("Iteractive live classes",style: GoogleFonts.poppins(color: brightness == Brightness.dark?Colors.white.withOpacity(0.8):Colors.black,fontSize: 14,fontWeight: FontWeight.w500),),
                                 SizedBox(height: 10,),
-                                Text("Preparation test will be taken",style: GoogleFonts.poppins(color: Colors.black,fontSize: 14,fontWeight: FontWeight.w500),),
+                                Text("Preparation test will be taken",style: GoogleFonts.poppins(color: brightness == Brightness.dark?Colors.white.withOpacity(0.8):Colors.black,fontSize: 14,fontWeight: FontWeight.w500),),
 
 
                               ],
@@ -180,7 +182,7 @@ class Subscription extends StatelessWidget {
                             ElevatedButton(
                               style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.deepPurple
+                                  brightness == Brightness.dark?Colors.white.withOpacity(0.8):Colors.deepPurple
                                 ),
                                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                   RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
@@ -188,11 +190,12 @@ class Subscription extends StatelessWidget {
                               ),
                                 onPressed: (){}, child: Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 15),
-                                  child: Text("Get Started",style: GoogleFonts.poppins(color: Colors.white,fontWeight: FontWeight.w800),),
+                                  child: Text("Get Started",style: GoogleFonts.poppins(color: brightness == Brightness.dark?Colors.black.withOpacity(0.6):Colors.white,fontWeight: FontWeight.w800),),
                                 ))
                           ],
                         ),
                       ),
+                  
                       // SizedBox(width : 10),
 
                     ],

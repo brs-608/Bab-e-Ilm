@@ -2,6 +2,7 @@
 import 'package:bab_e_ilm/Bloc/HomePages/user_info_bloc.dart';
 import 'package:bab_e_ilm/Bloc/SelectedSubject/selected_subject_bloc.dart';
 import 'package:bab_e_ilm/views/ClassLecturesNotes/messageHolder.dart';
+import 'package:bab_e_ilm/views/ClassLecturesNotes/videoCall.dart';
 import 'package:bab_e_ilm/views/Homepage/screens/classes.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -270,7 +271,9 @@ class _ClassRoomState extends State<ClassRoom> {
                         Text("Class Room",style: GoogleFonts.poppins(fontWeight: FontWeight.w900, fontSize: 18,color: Colors.white),),
                         Row(
                           children: [
-                            IconButton(onPressed: (){}, icon: Icon(Icons.video_call_sharp,color: Colors.white,)),
+                            IconButton(onPressed: (){
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>VideoCallScreen()));
+                            }, icon: Icon(Icons.video_call_sharp,color: Colors.white,)),
                             IconButton(onPressed: (){}, icon: Icon(Icons.more_vert,color: Colors.white,)),
                           ],
                         ),

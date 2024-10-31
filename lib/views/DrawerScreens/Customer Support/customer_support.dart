@@ -17,6 +17,8 @@ class _SupportScreenState extends State<SupportScreen> {
   TextEditingController messageController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    Brightness brightness = theme.brightness;
     final RegExp english = RegExp(r'^[a-zA-Z]+');
     return Scaffold(
       appBar: PreferredSize(
@@ -104,7 +106,7 @@ class _SupportScreenState extends State<SupportScreen> {
                             shape: BoxShape.circle),
                         child: Icon(
                           Icons.headset_mic_outlined,
-                          color: Colors.black,
+                          color: brightness == Brightness.light?Colors.black:Colors.white.withOpacity(0.9),
                           size: 36,
                         )),
                   ),
@@ -116,7 +118,7 @@ class _SupportScreenState extends State<SupportScreen> {
                     textAlign: TextAlign.center,
                     style: GoogleFonts.openSans(
                         fontWeight: FontWeight.w700,
-                        color: Colors.black,
+                        color: brightness == Brightness.light?Colors.black:Colors.white.withOpacity(0.9),
                         fontSize: 24),
                   ),
                 ),

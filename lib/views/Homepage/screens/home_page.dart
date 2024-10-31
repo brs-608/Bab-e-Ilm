@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:bab_e_ilm/Bloc/HomePages/user_info_bloc.dart';
 import 'package:bab_e_ilm/Utils/utilites.dart';
@@ -21,6 +23,7 @@ import '../../DrawerScreens/subscription.dart';
 import 'classes.dart';
 import 'dashboard.dart';
 import 'lectures.dart';
+import 'notifications.dart';
 
 class HomePage extends StatefulWidget {
   String email;
@@ -116,9 +119,13 @@ class _HomePageState extends State<HomePage> {
                   child: Container(
                     alignment: Alignment.centerRight,
                     padding: EdgeInsets.only(top: 25, right: 20),
-                    child: Icon(
+                    child: IconButton(
+                      onPressed:(){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications()));
+                      },
+                      icon:Icon(
                       Icons.notifications,
-                      color: Colors.white,
+                      color: Colors.white,)
                     ),
                   ),
                 )

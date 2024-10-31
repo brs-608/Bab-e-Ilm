@@ -1,4 +1,5 @@
 import 'package:bab_e_ilm/views/DrawerScreens/Customer%20Support/customer_support.dart';
+import 'package:bab_e_ilm/views/widget/customer_support_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,6 +9,8 @@ class Help extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    Brightness brightness = theme.brightness;
     return Scaffold(
         appBar: PreferredSize(
             preferredSize: Size.fromHeight(70),
@@ -74,7 +77,7 @@ class Help extends StatelessWidget {
                       color: Colors.grey.withOpacity(0.3),
                       shape: BoxShape.circle
                     ),
-                      child: Icon(Icons.headset_mic_outlined,color: Colors.black,size: 36,)),
+                      child: Icon(Icons.headset_mic_outlined,color: brightness == Brightness.light?Colors.black:Colors.white.withOpacity(0.9),size: 36,)),
                 ),
               ),
               Padding(
@@ -84,96 +87,13 @@ class Help extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: GoogleFonts.openSans(
                       fontWeight: FontWeight.w700,
-                      color: Colors.black,
+                      color: brightness == Brightness.light?Colors.black:Colors.white.withOpacity(0.9),
                       fontSize: 24),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 10,right: 10,top: 20),
-                child: Container(
-                  height: 150,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey.withOpacity(0.1)
-                  ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15,left: 20,right: 20),
-                        child: Row(
-                          children: [
-                            Icon(FontAwesomeIcons.arrowPointer,color: Colors.black.withOpacity(0.7),size: 20,),
-                            SizedBox(width: 10,),
-                            Text("Technical Support",style: GoogleFonts.openSans(fontSize: 17,fontWeight: FontWeight.w900,color: Colors.black.withOpacity(0.7)),),
-                            Expanded(
-                                child: Container(
-                                  alignment: Alignment.centerRight,
-                                    child: IconButton(icon:Icon(Icons.arrow_forward_ios,size: 20,color: Colors.black.withOpacity(0.7),),onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>SupportScreen(supportType: "Technical Support",)));},)))
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20.0 , right: 20,top: 0),
-                        child: Divider(),
-                      ),
-                      Padding(
-                          padding: EdgeInsets.only(left: 20,right: 20,top: 2),
-                        child: Text(
-                          "Select if you are facing a problem with purchasing,\nattending online classes or any technical bug.",
-                          style: TextStyle(
-                            color: Colors.black.withOpacity(0.7)
-                          ),
-                        ),
-                      )
-
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 10,right: 10,top: 20),
-                child: Container(
-                  height: 150,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey.withOpacity(0.1)
-                  ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15,left: 20,right: 20),
-                        child: Row(
-                          children: [
-                            Icon(Icons.shopping_cart_rounded,color: Colors.black.withOpacity(0.7),size: 20,),
-                            SizedBox(width: 10,),
-                            Text("Customer Support",style: GoogleFonts.openSans(fontSize: 17,fontWeight: FontWeight.w900,color: Colors.black.withOpacity(0.7)),),
-                            Expanded(
-                                child: Container(
-                                  alignment: Alignment.centerRight,
-                                    child: IconButton(icon:Icon(Icons.arrow_forward_ios,size: 20,color: Colors.black.withOpacity(0.7),),onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>SupportScreen(supportType: "Customer Support")));},)))
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20.0 , right: 20,top: 0),
-                        child: Divider(),
-                      ),
-                      Padding(
-                          padding: EdgeInsets.only(left: 20,right: 20,top: 2),
-                        child: Text(
-                          "Select if you need help in choosing a product or to know more about a product.",
-                          style: TextStyle(
-                            color: Colors.black.withOpacity(0.7)
-                          ),
-                        ),
-                      )
-
-                    ],
-                  ),
-                ),
-              ),
+              CustomerSupportWidget(supportType: "Technical Support", supportDescription: "Select if you are facing a problem with purchasing,\nattending online classes or any technical bug.", icon: FontAwesomeIcons.arrowPointer,),
+              CustomerSupportWidget(supportType: "Customer Support", supportDescription: "Select if you need help in choosing a product or to know more about a product.", icon: Icons.shopping_cart_rounded,),
+              const SizedBox(height: 20,)
             ],
           )
       ),

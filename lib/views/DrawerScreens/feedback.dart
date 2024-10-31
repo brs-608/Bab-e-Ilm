@@ -8,6 +8,8 @@ class FeedbackScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    Brightness brightness = theme.brightness;
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(70),
@@ -66,9 +68,9 @@ class FeedbackScreen extends StatelessWidget {
           children:[
             Padding(
               padding: const EdgeInsets.only(top:50),
-              child: Center(child: Text("Overall Rating",style: GoogleFonts.poppins(color: Colors.black,fontWeight: FontWeight.w600,fontSize: 22),)),
+              child: Center(child: Text("Overall Rating",style: GoogleFonts.poppins(color: brightness == Brightness.light?Colors.black:Colors.white.withOpacity(0.9),fontWeight: FontWeight.w600,fontSize: 22),)),
             ),
-            Text("4.6",style: GoogleFonts.montserrat(color: Colors.black,fontSize: 80,fontWeight: FontWeight.w700),),
+            Text("4.6",style: GoogleFonts.montserrat(color: brightness == Brightness.light?Colors.black:Colors.white.withOpacity(0.9),fontSize: 80,fontWeight: FontWeight.w700),),
             RatingBarIndicator(
 
               itemBuilder: (context,index){
@@ -82,9 +84,9 @@ class FeedbackScreen extends StatelessWidget {
             Row(
               children: [
                 SizedBox(width: 30,),
-                Text("Excellent",style: GoogleFonts.poppins(color: Colors.black,fontWeight: FontWeight.w600,fontSize : 18),),
+                Text("Excellent",style: GoogleFonts.poppins(color: brightness == Brightness.light?Colors.black:Colors.white.withOpacity(0.9),fontWeight: FontWeight.w600,fontSize : 18),),
                 SizedBox(width: 5,),
-                _buildProgressBar("label", Colors.pinkAccent, 40,20),
+                _buildProgressBar("label", Colors.pinkAccent, 40,20,context),
                 SizedBox(width: 15,),
               ],
             ),
@@ -92,9 +94,9 @@ class FeedbackScreen extends StatelessWidget {
             Row(
               children: [
                 SizedBox(width: 30,),
-                Text("Good",style: GoogleFonts.poppins(color: Colors.black,fontWeight: FontWeight.w600,fontSize : 18),),
+                Text("Good",style: GoogleFonts.poppins(color: brightness == Brightness.light?Colors.black:Colors.white.withOpacity(0.9),fontWeight: FontWeight.w600,fontSize : 18),),
                 SizedBox(width: 5,),
-                _buildProgressBar("label", Colors.pinkAccent, 75,52.2),
+                _buildProgressBar("label", Colors.pinkAccent, 75,52.2,context),
                 SizedBox(width: 15,),
               ],
             ),
@@ -102,9 +104,9 @@ class FeedbackScreen extends StatelessWidget {
             Row(
               children: [
                 SizedBox(width: 30,),
-                Text("Average",style: GoogleFonts.poppins(color: Colors.black,fontWeight: FontWeight.w600,fontSize : 18),),
+                Text("Average",style: GoogleFonts.poppins(color: brightness == Brightness.light?Colors.black:Colors.white.withOpacity(0.9),fontWeight: FontWeight.w600,fontSize : 18),),
                 SizedBox(width: 5,),
-                _buildProgressBar("label", Colors.pinkAccent, 25,23),
+                _buildProgressBar("label", Colors.pinkAccent, 25,23,context),
                 SizedBox(width: 15,),
               ],
             ),
@@ -112,9 +114,9 @@ class FeedbackScreen extends StatelessWidget {
             Row(
               children: [
                 SizedBox(width: 30,),
-                Text("Poor",style: GoogleFonts.poppins(color: Colors.black,fontWeight: FontWeight.w600,fontSize : 18),),
+                Text("Poor",style: GoogleFonts.poppins(color: brightness == Brightness.light?Colors.black:Colors.white.withOpacity(0.9),fontWeight: FontWeight.w600,fontSize : 18),),
                 SizedBox(width: 5,),
-                _buildProgressBar("label", Colors.pinkAccent, 60,62),
+                _buildProgressBar("label", Colors.pinkAccent, 60,62,context),
                 SizedBox(width: 15,),
               ],
             ),
@@ -130,7 +132,7 @@ class FeedbackScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: ElevatedButton(
         style: ButtonStyle(
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          shape: WidgetStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5)
             )
@@ -149,7 +151,9 @@ class FeedbackScreen extends StatelessWidget {
   }
 }
 
-Widget _buildProgressBar(String label, Color color, int percentage,double padding) {
+Widget _buildProgressBar(String label, Color color, int percentage,double padding,BuildContext context) {
+  ThemeData theme = Theme.of(context);
+  Brightness brightness = theme.brightness;
   return Expanded(
     child: Padding(
       padding: EdgeInsets.only(left: padding,right: 20),
@@ -160,7 +164,7 @@ Widget _buildProgressBar(String label, Color color, int percentage,double paddin
           border: Border.all(color: Colors.black.withOpacity(0.3))
         ),
         child: LinearProgressIndicator(
-          backgroundColor: Colors.grey.withOpacity(0.1),
+          backgroundColor: brightness == Brightness.light?Colors.grey.withOpacity(0.1):Colors.white.withOpacity(0.2),
           borderRadius: BorderRadius.circular(0),
           minHeight: 10,
           valueColor: AlwaysStoppedAnimation<Color>(color),

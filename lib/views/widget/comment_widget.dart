@@ -9,7 +9,8 @@ class CommentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    ThemeData theme = Theme.of(context);
+    Brightness brightness = theme.brightness;
     return InkWell(
       onTap: (){
 
@@ -31,7 +32,7 @@ class CommentWidget extends StatelessWidget {
 
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(email,style: TextStyle(color: Colors.grey.shade700),),
+                  Text(email,style: TextStyle(color: brightness == Brightness.dark?Colors.grey.shade500:Colors.grey.shade700),),
                   Text(comment,maxLines: 3,)
                 ],
               ),
